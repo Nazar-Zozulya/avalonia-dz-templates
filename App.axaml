@@ -26,7 +26,7 @@
 
         <Style Selector="StackPanel.Sidebar">
             <Setter Property="Background" Value="#000" />
-            <Setter Property="Opacity" Value="20" />
+            <Setter Property="Opacity" Value="0.2" />
             <Setter Property="Width" Value="370" />
             <Setter Property="Height" Value="800" />
         </Style>
@@ -34,7 +34,7 @@
         <Style Selector="StackPanel.Header">
             <Setter Property="Width" Value="800" />
             <Setter Property="Height" Value="40" />
-            <Setter Property="Spacing" Value="700"/>
+            <Setter Property="Spacing" Value="420"/>
         </Style>
 
         <Style Selector="StackPanel.SettingsBlock">
@@ -44,7 +44,7 @@
 
         <Style Selector="Button.SettingsButton">
             <Setter Property="Background" Value="#000" />
-            <Setter Property="Opacity" Value="20" />
+            <Setter Property="Opacity" Value="0.2" />
             <Setter Property="Width" Value="40" />
             <Setter Property="Height" Value="40" />
         </Style>
@@ -69,7 +69,7 @@
             <Setter Property="Width" Value="400" />
             <Setter Property="Height" Value="300" />
             <Setter Property="Background" Value="#000" />
-            <Setter Property="Opacity" Value="20" />
+            <Setter Property="Opacity" Value="0.2" />
 
         </Style>
 
@@ -77,21 +77,21 @@
             <Setter Property="Width" Value="400" />
             <Setter Property="Height" Value="300" />
             <Setter Property="Background" Value="#000" />
-            <Setter Property="Opacity" Value="20" />
+            <Setter Property="Opacity" Value="0.2" />
         </Style>
 
         <Style Selector="Grid.WeatherInfoForDays">
          <Setter Property="Width" Value="800" />
             <Setter Property="Height" Value="160" />
             <Setter Property="Background" Value="#000" />
-            <Setter Property="Opacity" Value="20" />
+            <Setter Property="Opacity" Value="0.2" />
         </Style>
 
         <Style Selector="Grid.WeatherInfoForHours">
          <Setter Property="Width" Value="800" />
             <Setter Property="Height" Value="160" />
             <Setter Property="Background" Value="#000" />
-            <Setter Property="Opacity" Value="20" />
+            <Setter Property="Opacity" Value="0.2" />
         </Style>
     </Application.Styles>
 </Application>

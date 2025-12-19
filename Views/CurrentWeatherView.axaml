@@ -1,0 +1,89 @@
+﻿<UserControl
+    x:Class="avalonia_dz_templates.Views.CurrentWeatherView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:avalonia_dz_templates.ViewModels"
+    d:Height="300"
+    d:Width="390"
+    x:DataType="vm:CityViewModel"
+    mc:Ignorable="d">
+    <Border
+        Width="390"
+        Height="300"
+        Padding="20"
+        Background="#33000000"
+        CornerRadius="10">
+
+        <StackPanel>
+            <StackPanel
+                Margin="0,0,0,10"
+                Orientation="Horizontal"
+                Spacing="10">
+                <PathIcon
+                    Width="15"
+                    Height="15"
+                    Data="{StaticResource navigation_regular}"
+                    Foreground="White" />
+                <TextBlock
+                    FontSize="14"
+                    Foreground="White"
+                    Text="Поточна позиція" />
+            </StackPanel>
+
+            <Border
+                Height="1"
+                Margin="0,0,0,20"
+                Background="White"
+                Opacity="0.3" />
+
+            <TextBlock
+                Margin="0,0,0,10"
+                HorizontalAlignment="Center"
+                FontSize="48"
+                FontWeight="SemiBold"
+                Foreground="White"
+                Text="{Binding Name}" />
+
+            <StackPanel
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="15">
+
+                <Image
+                    Width="100"
+                    Height="100"
+                    Source="avares://WeatherApp/Assets/sun.png"
+                    Stretch="Uniform" />
+
+                <TextBlock
+                    FontSize="64"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="{Binding Temperature, StringFormat='{}{0}°'}" />
+            </StackPanel>
+
+            <TextBlock
+                Margin="0,10,0,5"
+                HorizontalAlignment="Center"
+                FontSize="24"
+                Foreground="White"
+                Text="{Binding Description}" />
+
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="16"
+                Foreground="White"
+                Opacity="0.8">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Макс.:{0}°, мін.:{1}°">
+                        <Binding Path="MaxTemp" />
+                        <Binding Path="MinTemp" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+
+        </StackPanel>
+    </Border>
+</UserControl>

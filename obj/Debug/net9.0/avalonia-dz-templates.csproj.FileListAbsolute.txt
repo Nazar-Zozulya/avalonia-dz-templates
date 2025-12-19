@@ -72,3 +72,9 @@ C:\avalonia\avalonia-dz-templates\obj\Debug\net9.0\refint\avalonia-dz-templates.
 C:\avalonia\avalonia-dz-templates\obj\Debug\net9.0\avalonia-dz-templates.pdb
 C:\avalonia\avalonia-dz-templates\obj\Debug\net9.0\avalonia-dz-templates.genruntimeconfig.cache
 C:\avalonia\avalonia-dz-templates\obj\Debug\net9.0\ref\avalonia-dz-templates.dll
+C:\avalonia\avalonia-dz-templates\obj\Debug\net9.0\avalonia-dz-templates.sourcelink.json
+C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\Avalonia.ReactiveUI.dll
+C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\DynamicData.dll
+C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\ReactiveUI.dll
+C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\Splat.dll
+C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\System.Reactive.dll

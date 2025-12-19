@@ -3,7 +3,8 @@
         xmlns:vm="using:avalonia_dz_templates.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:views="clr-namespace:avalonia_dz_templates.Views"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
         Width="1200" Height="800"
         x:Class="avalonia_dz_templates.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -22,24 +23,23 @@
         <StackPanel Classes="Sidebar" Grid.Column="0">
         </StackPanel>
 
-        <Grid Grid.Column="1" RowDefinitions="40,300,160,200">
-            <StackPanel Grid.Row="0" Classes="Header">
+        <StackPanel Grid.Column="1" Spacing="20" >
+            <StackPanel Classes="Header" Orientation="Horizontal">
                 <StackPanel Classes="SettingsBlock">
                     <Button Classes="SettingsButton"/>
                     <TextBlock Text="Settings" Classes="SettingsLabel"/>
                 </StackPanel>
                 <TextBox Classes="SearchInput" Watermark="Пошук"/>
             </StackPanel>
-            <StackPanel Grid.Row="1" Classes="ContentBlock">
-                <Grid Classes="WeatherInfoAboutSelectedCity">
-
-                </Grid>
+            <StackPanel Classes="ContentBlock" Orientation="Horizontal">
+                <views:CurrentWeatherView/>
                 <Grid Classes="TimeBlock"></Grid>
             </StackPanel>
-            <Grid Grid.Row="2" Classes="WeatherInfoForDays">
+            <Grid Classes="WeatherInfoForDays">
             </Grid>
-            <Grid Grid.Row="3" Classes="WeatherInfoForHours">
+            <Grid Classes="WeatherInfoForHours">
             </Grid>
 
-        </Grid>
+        </StackPanel>
+    </Grid>    
 </Window>
