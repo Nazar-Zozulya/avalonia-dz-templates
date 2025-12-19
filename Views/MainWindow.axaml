@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:avalonia_dz_templates.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        Width="1200" Height="800"
+        x:Class="avalonia_dz_templates.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        ExtendClientAreaChromeHints="NoChrome"
+        Title="avalonia_dz_templates">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
+
+    <Grid ColumnDefinitions="370,*" Classes="MainGrid">
+        <StackPanel Classes="Sidebar" Grid.Column="0">
+        </StackPanel>
+
+        <Grid Grid.Column="1" RowDefinitions="40,300,160,200">
+            <StackPanel Grid.Row="0" Classes="Header">
+                <StackPanel Classes="SettingsBlock">
+                    <Button Classes="SettingsButton"/>
+                    <TextBlock Text="Settings" Classes="SettingsLabel"/>
+                </StackPanel>
+                <TextBox Classes="SearchInput" Watermark="Пошук"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Classes="ContentBlock">
+                <Grid Classes="WeatherInfoAboutSelectedCity">
+
+                </Grid>
+                <Grid Classes="TimeBlock"></Grid>
+            </StackPanel>
+            <Grid Grid.Row="2" Classes="WeatherInfoForDays">
+            </Grid>
+            <Grid Grid.Row="3" Classes="WeatherInfoForHours">
+            </Grid>
+
+        </Grid>
+</Window>
