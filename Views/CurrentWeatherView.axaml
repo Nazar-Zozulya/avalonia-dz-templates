@@ -51,11 +51,12 @@
                 Orientation="Horizontal"
                 Spacing="15">
 
-                <Image
-                    Width="100"
-                    Height="100"
-                    Source="avares://WeatherApp/Assets/sun.png"
-                    Stretch="Uniform" />
+                <!-- <Image -->
+                <!--     Width="100" -->
+                <!--     Height="100" -->
+                <!--     Source="avares://WeatherApp/Assets/sun.png" -->
+                <!--     Stretch="Uniform" -->
+                <!--     /> -->
 
                 <TextBlock
                     FontSize="64"

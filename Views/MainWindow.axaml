@@ -10,6 +10,8 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         ExtendClientAreaChromeHints="NoChrome"
+        ExtendClientAreaToDecorationsHint="True"
+        
         Title="avalonia_dz_templates">
 
     <Design.DataContext>
@@ -21,9 +23,38 @@
 
     <Grid ColumnDefinitions="370,*" Classes="MainGrid">
         <StackPanel Classes="Sidebar" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 10">
+                <Button Width="52" Height="24" Background="Red">
+                    
+                </Button>
+            </StackPanel>
+            <StackPanel>
+                <ListBox  ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel >
+                                <StackPanel HorizontalAlignment="Left" DockPanel.Dock="Left">
+                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="15:24" />
+                                    <TextBlock Text="{Binding Description}" />
+                                </StackPanel>
+                                <StackPanel HorizontalAlignment="Left" DockPanel.Dock="Right">
+                                    <TextBlock Text="{Binding Temperature}" />
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="Макс.:{0}°, мін.:{1}°">
+                                            <Binding Path="MaxTemp" />
+                                            <Binding Path="MinTemp" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </StackPanel>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Spacing="20" >
+        <StackPanel Grid.Column="1" Spacing="20" Margin="0, 30, 0, 0" >
             <StackPanel Classes="Header" Orientation="Horizontal">
                 <StackPanel Classes="SettingsBlock">
                     <Button Classes="SettingsButton"/>
@@ -32,7 +63,9 @@
                 <TextBox Classes="SearchInput" Watermark="Пошук"/>
             </StackPanel>
             <StackPanel Classes="ContentBlock" Orientation="Horizontal">
-                <views:CurrentWeatherView/>
+                <views:CurrentWeatherView
+                    DataContext="{Binding SelectedCity}"
+                    /> 
                 <Grid Classes="TimeBlock"></Grid>
             </StackPanel>
             <Grid Classes="WeatherInfoForDays">
