@@ -8,11 +8,11 @@ namespace avalonia_dz_templates.ViewModels
 
         private int _temperature;
 
-        public string Description { get; set; }
-
         public int MaxTemp { get; set; }
 
         public int MinTemp { get; set; }
+
+        public string Description { get; set; }
 
         public CityViewModel(string name, int temperature, int minTemp, int maxTemp, string description)
         {
