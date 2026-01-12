@@ -89,21 +89,24 @@
             <Setter Property="Height" Value="160" />
             <Setter Property="Background" Value="#33000000" />
         </Style>
-        <Style Selector="ListBoxItem">
-            <Setter  Property="Background" Value="Transparent"></Setter>
-        </Style>
-        <Style Selector="ListBoxItem:pointerover">
-            <Setter  Property="Background" Value="Transparent"></Setter>
-        </Style>
-        <Style Selector="ListBoxItem:selected">
-            <Setter  Property="Background" Value="Transparent"></Setter>
-        </Style>
+        
+        <!-- <Style Selector="ListBoxItem"> -->
+        <!--     <Setter  Property="Background" Value="Transparent"></Setter> -->
+        <!-- </Style> -->
+        <!-- <Style Selector="ListBoxItem:pointerover"> -->
+        <!--     <Setter  Property="Background" Value="Transparent"></Setter> -->
+        <!-- </Style> -->
+        <!-- <Style Selector="ListBoxItem:selected"> -->
+        <!--     <Setter  Property="Background" Value="Transparent"></Setter> -->
+        <!-- </Style> -->
+        <!-- -->
         <!-- <Style Selector="ListBoxItem:pointerover  > ContentPresenter"> -->
         <!--     <Setter  Property="Background" Value="Transparent"></Setter> -->
         <!-- </Style> -->
         <!-- <Style Selector="ListBoxItem:selected  > ContentPresenter"> -->
         <!--     <Setter  Property="Background" Value="Transparent"></Setter> -->
         <!-- </Style> -->
+        <!-- -->
         <!-- <Style Selector="ListBoxItem:pointerover:selected  > ContentPresenter"> -->
         <!--     <Setter  Property="Background" Value="Transparent"></Setter> -->
         <!-- </Style> -->

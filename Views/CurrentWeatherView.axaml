@@ -54,7 +54,7 @@
                 <Image
                     Width="100"
                     Height="100"
-                    Source="avares://avalonia-dz-templates/Assets/sun.png"
+                    Source="{Binding Img}"
                     Stretch="Uniform"
                     />
 

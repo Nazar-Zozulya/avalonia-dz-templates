@@ -1,4 +1,7 @@
-﻿using ReactiveUI;
+﻿using System;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
+using ReactiveUI;
 
 namespace avalonia_dz_templates.ViewModels
 {
@@ -14,13 +17,35 @@ namespace avalonia_dz_templates.ViewModels
 
         public string Description { get; set; }
 
-        public CityViewModel(string name, int temperature, int minTemp, int maxTemp, string description)
+        private Bitmap _img;
+
+        public Bitmap Img
+        {
+            get => _img;
+            set => this.RaiseAndSetIfChanged(ref _img, value);
+        }
+
+        public CityViewModel(string name, int temperature, int minTemp, int maxTemp, string description, string imgPath)
         {
             Name = name;
             Temperature = temperature;
             MinTemp = minTemp;
             MaxTemp = maxTemp;
             Description = description;
+            Img = LoadImg(imgPath);
+        }
+
+        private Bitmap LoadImg(string path)
+        {
+            try
+            {
+                return new Bitmap(AssetLoader.Open(new Uri(path)));
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(0);
+                return null;
+            }
         }
 
         public string Name

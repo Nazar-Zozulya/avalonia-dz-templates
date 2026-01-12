@@ -23,10 +23,10 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         Cities = new ObservableCollection<CityViewModel>
         {
-            new CityViewModel("Київ", 14,1 ,16,"description"),
-            new CityViewModel("Дніпро", 14,1 ,16,"description"),
-            new CityViewModel("Харків", 14,1 ,16,"description"),
-            new CityViewModel("Донбасс", 14,1 ,16,"description")
+            new CityViewModel("Київ", 14,1 ,16,"description", "avares://avalonia_dz_templates/Assets/sun.png"),
+            new CityViewModel("Дніпро", 15,2 ,17,"description2", "avares://avalonia_dz_templates/Assets/cloudy.png"),
+            new CityViewModel("Харків", 16,3 ,18,"description3", "avares://avalonia_dz_templates/Assets/sun.png"),
+            new CityViewModel("Донбасс", 17,4 ,19,"description4", "avares://avalonia_dz_templates/Assets/cloudy.png")
         };
         
         SelectedCity = Cities.FirstOrDefault();
