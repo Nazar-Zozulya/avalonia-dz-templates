@@ -10,80 +10,67 @@
     x:DataType="vm:CityViewModel"
     mc:Ignorable="d">
     <Border
-        Width="390"
-        Height="300"
-        Padding="20"
-        Background="#33000000"
-        CornerRadius="10">
+		Classes="CurrentWeatherBorder">
 
-        <StackPanel>
+        <StackPanel Classes="CurrentWeatherContainer">
             <StackPanel
-                Margin="0,0,0,10"
-                Orientation="Horizontal"
-                Spacing="10">
-                <PathIcon
-                    Width="15"
-                    Height="15"
-                    Data="{StaticResource navigation_regular}"
-                    Foreground="White" />
+                Classes="CWHeader"
+                Orientation="Horizontal">
+                <Image
+                    Classes="CWHeaderIcon"
+                    Source="avares://avalonia-dz-templates/Assets/navigation.png"
+                    
+                    />
                 <TextBlock
-                    FontSize="14"
-                    Foreground="White"
+                    Classes="CWHeaderText"
                     Text="Поточна позиція" />
             </StackPanel>
 
             <Border
-                Height="1"
-                Margin="0,0,0,20"
-                Background="White"
-                Opacity="0.3" />
-
-            <TextBlock
-                Margin="0,0,0,10"
-                HorizontalAlignment="Center"
-                FontSize="48"
-                FontWeight="SemiBold"
-                Foreground="White"
-                Text="{Binding Name}" />
-
-            <StackPanel
-                HorizontalAlignment="Center"
-                Orientation="Horizontal"
-                Spacing="15">
-
-                <Image
-                    Width="100"
-                    Height="100"
-                    Source="{Binding Img}"
-                    Stretch="Uniform"
-                    />
-
+                Classes="CWLine"
+                />
+            
+            <StackPanel Classes="CWContent" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock
-                    FontSize="64"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    Text="{Binding Temperature, StringFormat='{}{0}°'}" />
+                    Classes="CWSelectedCity"
+                    HorizontalAlignment="Center"
+                    Text="{Binding Name}" />
+    
+                <StackPanel
+                    Classes="CWWeatherBlock"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    >
+    
+                    <Image
+                        Classes="CWWeatherIcon"
+                        Source="{Binding Img}"
+                        />
+    
+                    <TextBlock
+                        Classes="CWWeatherTemp"
+                        Text="{Binding Temperature, StringFormat='{}{0}°'}" />
+                </StackPanel>
+    
+                <TextBlock
+                    Classes="CWDescription"
+                    HorizontalAlignment="Center"
+                    Text="{Binding Description}" />
+    
+                <TextBlock
+                    Classes="CWMinMaxTemp"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,10"
+                    >
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="Макс.:{0}°, мін.:{1}°">
+                            <Binding Path="MaxTemp" />
+                            <Binding Path="MinTemp" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            
             </StackPanel>
-
-            <TextBlock
-                Margin="0,10,0,5"
-                HorizontalAlignment="Center"
-                FontSize="24"
-                Foreground="White"
-                Text="{Binding Description}" />
-
-            <TextBlock
-                HorizontalAlignment="Center"
-                FontSize="16"
-                Foreground="White"
-                Opacity="0.8">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="Макс.:{0}°, мін.:{1}°">
-                        <Binding Path="MaxTemp" />
-                        <Binding Path="MinTemp" />
-                    </MultiBinding>
-                </TextBlock.Text>
-            </TextBlock>
 
         </StackPanel>
     </Border>

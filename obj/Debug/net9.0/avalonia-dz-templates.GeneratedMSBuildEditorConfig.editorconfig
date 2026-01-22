@@ -24,6 +24,9 @@ build_property.EnableCodeStyleSeverity =
 [C:/avalonia/avalonia-dz-templates/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/avalonia/avalonia-dz-templates/Views/ClockView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/avalonia/avalonia-dz-templates/Views/CurrentWeatherView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

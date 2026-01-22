@@ -10,8 +10,5 @@ public partial class CurrentWeatherView : UserControl
         InitializeComponent();
     }
 
-    private void InitializeComponent()
-    {
-        AvaloniaXamlLoader.Load(this);
-    }
+    
 }

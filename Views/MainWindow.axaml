@@ -23,8 +23,8 @@
     <Grid ColumnDefinitions="370,*" Classes="MainGrid">
         <StackPanel Classes="Sidebar" Grid.Column="0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 10">
-                <Button Width="52" Height="24" Background="Red">
-                    
+                <Button Width="52" Height="24" Background="Transparent">
+                    <Image Source="avares://avalonia-dz-templates/Assets/button-theme-black.png" Height="36" />
                 </Button>
             </StackPanel>
             <StackPanel>
@@ -51,7 +51,7 @@
                                 
                                 <StackPanel HorizontalAlignment="Left" DockPanel.Dock="Left">
                                     <StackPanel Orientation="Horizontal" Spacing="3">
-                                        <Image Source="avares://avalonia-dz-templates/Assets/plane.png" Width="16" />
+                                        <Image Source="avares://avalonia-dz-templates/Assets/navigation.png" Width="16" />
                                         <TextBlock Text="{Binding Name}" FontSize="24" Foreground="White" FontWeight="Bold" />
                                     </StackPanel>
                                     <TextBlock Text="15:24" FontSize="12" Foreground="White" />
@@ -79,7 +79,7 @@
         <StackPanel Grid.Column="1" Spacing="20" Margin="0, 30, 0, 0" >
             <StackPanel Classes="Header" Orientation="Horizontal">
                 <StackPanel Classes="SettingsBlock"> 
-                    <Button Classes="SettingsButton"><Image Source="avares://avalonia-dz-templates/Assets/sun.png" /></Button>
+                    <Button Classes="SettingsButton"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
                     <TextBlock Text="Settings" Classes="SettingsLabel"/>
                 </StackPanel>
                 <TextBox Classes="SearchInput" Watermark="Пошук"/>
@@ -88,7 +88,9 @@
                 <views:CurrentWeatherView
                     DataContext="{Binding SelectedCity}"
                     /> 
-                <Grid Classes="TimeBlock"></Grid>
+                <views:ClockView
+                    DataContext="{Binding $parent[Window].DataContext}"
+                />
             </StackPanel>
             <Grid Classes="WeatherInfoForDays">
             </Grid>

@@ -1,0 +1,32 @@
+﻿<UserControl
+    x:Class="avalonia_dz_templates.Views.ClockView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:avalonia_dz_templates.ViewModels"
+    x:DataType="vm:MainWindowViewModel"
+>
+    <Border Classes="ClBorder">
+        <StackPanel Classes="ClContainer">
+            <StackPanel Classes="ClHeader">
+                <TextBlock Text="Сьогодні" Classes="ClHeaderText" />
+            </StackPanel>
+            <Border
+                Classes="CWLine"
+            />
+            <StackPanel Classes="ClContent" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <DockPanel LastChildFill="False" Classes="ClDayAndDateBlock">
+                    <TextBlock Classes="ClDayOfWeek" DockPanel.Dock="Left" Text="{Binding CurrentDayOfWeek}" />
+                    <TextBlock Classes="ClDate" DockPanel.Dock="Right" Text="{Binding CurrentDate}" />
+                </DockPanel>
+                <Grid Classes="ClTimeBlock" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid.Background>
+                        <ImageBrush Source="avares://avalonia-dz-templates/Assets/clock-circle.png" Stretch="Uniform" />
+                    </Grid.Background>
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center" Classes="ClTime" Text="{Binding CurrentTime}" />
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+        
+    </Border>
+</UserControl>
