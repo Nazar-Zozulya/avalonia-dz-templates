@@ -1,0 +1,93 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:avalonia_dz_templates.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="250"
+             x:Class="avalonia_dz_templates.Views.HourlyForecastView"
+             x:DataType="vm:CityViewModel">
+
+    <Border Background="#33000000" CornerRadius="15" Height="200" Margin="0,0,0,0">
+        <Grid RowDefinitions="Auto, Auto, *">
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="20,15,0,10">
+                <TextBlock Text="Прогноз на 24 години" Foreground="White" Opacity="0.9" FontSize="16" />
+            </StackPanel>
+
+            <Border Grid.Row="1" Height="1" Background="White" Opacity="0.2" Margin="0,0,0,10" />
+
+            <Grid Grid.Row="2" ColumnDefinitions="Auto, *, Auto">
+
+                <Button Grid.Column="0" 
+                        Content="&lt;" 
+                        Classes="ScrollButton"
+                        Background="Transparent" 
+                        Foreground="White" 
+                        FontSize="20"
+                        Margin="5,0"/>
+
+                <ListBox Grid.Column="1"
+                         x:Name="ForecastList"
+                         ItemsSource="{Binding HourlyForecasts}"
+                         Background="Transparent"
+                         ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" Spacing="25" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+
+                        <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Style>
+
+                        <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Style>
+                    </ListBox.Styles>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center" Spacing="8" Width="50">
+
+                                <TextBlock Text="{Binding Time}"
+                                           HorizontalAlignment="Center"
+                                           Foreground="White"
+                                           Opacity="0.8"
+                                           FontSize="16" />
+
+                                <Panel Width="32" Height="32">
+                                    <Image Source="{Binding Icon}"
+                                           IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNotNull}}" />
+                                    <Ellipse Width="10" Height="10" Fill="White" Opacity="0.3"
+                                             IsVisible="{Binding Icon, Converter={x:Static ObjectConverters.IsNull}}" />
+                                </Panel>
+
+                                <TextBlock Text="{Binding Temprature, StringFormat='{}{0}°'}"
+                                           HorizontalAlignment="Center"
+                                           Foreground="White"
+                                           FontWeight="Bold"
+                                           FontSize="18" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Button Grid.Column="2" 
+                        Content="&gt;" 
+                        Classes="ScrollButton"
+                        Background="Transparent" 
+                        Foreground="White" 
+                        FontSize="20"
+                        Margin="5,0"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

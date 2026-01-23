@@ -92,8 +92,7 @@
                     DataContext="{Binding $parent[Window].DataContext}"
                 />
             </StackPanel>
-            <Grid Classes="WeatherInfoForDays">
-            </Grid>
+            <views:HourlyForecastView DataContext="{Binding SelectedCity}"  />
             <Grid Classes="WeatherInfoForHours">
             </Grid>
 
