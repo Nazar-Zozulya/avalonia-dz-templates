@@ -68,7 +68,7 @@ namespace avalonia_dz_templates.ViewModels
                 int t = baseTemp + new Random().Next(-3, 4);
                 
                 
-                string iconPath = (i % 2 == 0 ) ? "avares://avalonia_dz_templates/Assets/cloudy" : "avares://avalonia_dz_templates/Assets/sun.png";
+                string iconPath = (i % 2 == 0 ) ? "avares://avalonia-dz-templates/Assets/cloudy.png" : "avares://avalonia-dz-templates/Assets/sun.png";
                 
                 HourlyForecasts.Add(new HourlyForecastViewModel(timeDisplay, t, iconPath));
             }
