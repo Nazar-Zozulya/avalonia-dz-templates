@@ -6,6 +6,7 @@
         <entry key="App.axaml" value="avalonia-dz-templates.csproj" />
         <entry key="Views/ClockView.axaml" value="avalonia-dz-templates.csproj" />
         <entry key="Views/CurrentWeatherView.axaml" value="avalonia-dz-templates.csproj" />
+        <entry key="Views/DayForecast.axaml" value="avalonia-dz-templates.csproj" />
         <entry key="Views/HourlyForecastView.axaml" value="avalonia-dz-templates.csproj" />
         <entry key="Views/MainWindow.axaml" value="avalonia-dz-templates.csproj" />
       </map>

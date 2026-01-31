@@ -11,6 +11,7 @@
         Icon="/Assets/avalonia-logo.ico"
         ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaToDecorationsHint="True"
+        xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
         
         Title="avalonia_dz_templates">
 
@@ -28,7 +29,7 @@
                 </Button>
             </StackPanel>
             <StackPanel>
-                <ListBox Background="Transparent" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}">
+                <ListBox Background="Transparent" SelectionChanged="SelectionChanged" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}">
                     <ListBox.Styles>
                         <Style Selector="ListBoxItem">
                             <Setter Property="CornerRadius" Value="8" />

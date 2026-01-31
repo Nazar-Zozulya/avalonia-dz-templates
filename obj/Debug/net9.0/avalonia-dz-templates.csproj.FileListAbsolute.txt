@@ -78,3 +78,7 @@ C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\DynamicData.dll
 C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\ReactiveUI.dll
 C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\Splat.dll
 C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\System.Reactive.dll
+C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\LiveChartsCore.dll
+C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\LiveChartsCore.SkiaSharpView.dll
+C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\LiveChartsCore.SkiaSharpView.Avalonia.dll
+C:\avalonia\avalonia-dz-templates\bin\Debug\net9.0\SkiaSharp.HarfBuzz.dll

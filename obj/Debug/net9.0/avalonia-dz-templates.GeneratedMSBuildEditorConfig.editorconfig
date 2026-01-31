@@ -30,6 +30,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/avalonia/avalonia-dz-templates/Views/CurrentWeatherView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/avalonia/avalonia-dz-templates/Views/DayForecastView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/avalonia/avalonia-dz-templates/Views/HourlyForecastView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

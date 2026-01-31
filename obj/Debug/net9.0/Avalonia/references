@@ -26,6 +26,9 @@ C:\Users\likee\.nuget\packages\avalonia.x11\11.3.9\lib\net8.0\Avalonia.X11.dll
 C:\Users\likee\.nuget\packages\communitytoolkit.mvvm\8.2.1\lib\net6.0\CommunityToolkit.Mvvm.dll
 C:\Users\likee\.nuget\packages\dynamicdata\8.4.1\lib\net8.0\DynamicData.dll
 C:\Users\likee\.nuget\packages\harfbuzzsharp\8.3.1.1\lib\net8.0\HarfBuzzSharp.dll
+C:\Users\likee\.nuget\packages\livechartscore\2.0.0-rc6.1\lib\net8.0\LiveChartsCore.dll
+C:\Users\likee\.nuget\packages\livechartscore.skiasharpview.avalonia\2.0.0-rc6.1\lib\net8.0\LiveChartsCore.SkiaSharpView.Avalonia.dll
+C:\Users\likee\.nuget\packages\livechartscore.skiasharpview\2.0.0-rc6.1\lib\net8.0\LiveChartsCore.SkiaSharpView.dll
 C:\Users\likee\.nuget\packages\microcom.runtime\0.11.0\lib\net5.0\MicroCom.Runtime.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.11\ref\net9.0\Microsoft.CSharp.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.11\ref\net9.0\Microsoft.VisualBasic.Core.dll
@@ -36,6 +39,7 @@ C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.11\ref\net9.0\mscorl
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.11\ref\net9.0\netstandard.dll
 C:\Users\likee\.nuget\packages\reactiveui\20.1.1\lib\net8.0\ReactiveUI.dll
 C:\Users\likee\.nuget\packages\skiasharp\2.88.9\lib\net6.0\SkiaSharp.dll
+C:\Users\likee\.nuget\packages\skiasharp.harfbuzz\2.88.9\lib\net6.0\SkiaSharp.HarfBuzz.dll
 C:\Users\likee\.nuget\packages\splat\15.1.1\lib\net8.0\Splat.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.11\ref\net9.0\System.AppContext.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\9.0.11\ref\net9.0\System.Buffers.dll

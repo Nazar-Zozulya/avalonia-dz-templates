@@ -31,6 +31,7 @@
 
                 <ListBox Grid.Column="1"
                          SelectedIndex="0"
+                         
                          x:Name="ForecastList"
                          ItemsSource="{Binding HourlyForecasts}"
                          Background="Transparent"
