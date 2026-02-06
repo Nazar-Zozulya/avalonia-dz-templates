@@ -83,7 +83,7 @@
                     <Button Classes="SettingsButton"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
                     <TextBlock Text="Settings" Classes="SettingsLabel"/>
                 </StackPanel>
-                <TextBox Classes="SearchInput" Watermark="Пошук"/>
+                <AutoCompleteBox Classes="SearchInput" Watermark="Пошук" ItemsSource="{Binding AvailableCities}"/>
             </StackPanel>
             <StackPanel Classes="ContentBlock" Orientation="Horizontal">
                 <views:CurrentWeatherView
@@ -94,8 +94,7 @@
                 />
             </StackPanel>
             <views:HourlyForecastView DataContext="{Binding SelectedCity}"  />
-            <Grid Classes="WeatherInfoForHours">
-            </Grid>
+            <views:DayForecastView DataContext="{Binding SelectedCity}"  />
 
         </StackPanel>
     </Grid>    

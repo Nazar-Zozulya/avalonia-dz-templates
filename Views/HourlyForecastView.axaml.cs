@@ -21,9 +21,6 @@ public partial class HourlyForecastView : UserControl
             ForecastList.ScrollIntoView(forecastList);
             
         }
-        
-        
-        Console.WriteLine(forecastList);
     }
 
     private void Right_ButtonClick(object? sender, RoutedEventArgs e)
@@ -36,11 +33,6 @@ public partial class HourlyForecastView : UserControl
             ForecastList.ScrollIntoView(forecastList);
             
         }
-        
-        Console.WriteLine("item count" + ForecastList.ItemCount);
-        
-        
-        Console.WriteLine(forecastList);
     }
 
 }
