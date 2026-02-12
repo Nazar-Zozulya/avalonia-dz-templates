@@ -13,7 +13,7 @@ public partial class CitiesViewModel : ViewModelBase
     {
         Cities = new ObservableCollection<CityViewModel>
         {
-            new CityViewModel("Київ", 14,1 ,16,"description", "fdf")
+            new CityViewModel("Київ", 14,"cloudy",1 ,16,"description", 1)
         };
     }
 }

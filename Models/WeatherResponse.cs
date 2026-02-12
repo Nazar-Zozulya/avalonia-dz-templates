@@ -5,13 +5,41 @@ using System.Text.Json.Serialization;
 
 namespace avalonia_dz_templates.Models
 {
+    
+    // public class WeatherResponse
+    // {
+    //     [JsonPropertyName("weather")] public List<WeatherInfo> Weather { get; set; } = new();
+    //     
+    //     [JsonPropertyName("main")] public MainInfo Main { get; set; } = new();
+    //     
+    //     [JsonPropertyName("name")] public string Name { get; set; }
+    //     
+    //     [JsonPropertyName("timezone")] public int Timezone { get; set; }
+    //     
+    //     [JsonPropertyName("wind")] public WindInfo Wind { get; set; }
+    //
+    //
+    // }
     public class WeatherResponse
     {
+        [JsonPropertyName("list")] public List<ListWeather> List { get; set; } = new();
+    
+    
+    }
+    
+    public class ListWeather
+    {
         [JsonPropertyName("weather")] public List<WeatherInfo> Weather { get; set; } = new();
-
+    
         [JsonPropertyName("main")] public MainInfo Main { get; set; } = new();
-
-
+        
+        [JsonPropertyName("name")] public string Name { get; set; }
+        
+        [JsonPropertyName("timezone")] public int Timezone { get; set; }
+        
+        [JsonPropertyName("wind")] public WindInfo Wind { get; set; }
+        
+        [JsonPropertyName("dt_txt")] public long Dt { get; set; }
     }
 
     public class WeatherInfo
@@ -35,6 +63,11 @@ namespace avalonia_dz_templates.Models
         
         [JsonPropertyName("humidity")]
         public int Humidity { get; set; }
+    }
+
+    public class WindInfo
+    {
+        [JsonPropertyName("speed")] public int Speed { get; set; }
     }
 }
 

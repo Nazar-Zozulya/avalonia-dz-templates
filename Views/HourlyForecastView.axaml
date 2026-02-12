@@ -3,11 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:avalonia_dz_templates.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="250" d:Width="800" d:Height="250"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="160" d:Width="800" d:Height="160"
              x:Class="avalonia_dz_templates.Views.HourlyForecastView"
              x:DataType="vm:CityViewModel">
 
-    <Border Background="#33000000" CornerRadius="15" Height="200" Width="800" Margin="0,0,0,0">
+    <Border Background="#33000000" CornerRadius="15" Height="160" Width="800" Margin="0,0,0,0">
         <Grid RowDefinitions="Auto, Auto, *">
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="20,15,0,10">

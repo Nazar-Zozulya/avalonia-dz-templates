@@ -4,6 +4,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using ReactiveUI;
 using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 namespace avalonia_dz_templates.ViewModels
 {
@@ -94,13 +95,19 @@ namespace avalonia_dz_templates.ViewModels
 
         // --- КОНСТРУКТОРИ ---
 
-        public CityViewModel() 
+
+        public List<int> Allah { get; } = new() {1,2,3,4,5,6,7,8,9,10};
+
+        public List<int> ForecastFor12H { get; } = new(40) {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40};
+         public CityViewModel() 
         { 
             // Ініціалізація для JSON
         }
 
         public CityViewModel(string name, int temp, string desc, int max, int min, string imagePath, int timezoneOffsetSeconds)
         {
+
+
             Name = name;
             Temperature = temp;
             Description = desc;
@@ -108,6 +115,8 @@ namespace avalonia_dz_templates.ViewModels
             MinTemp = min;
             ImagePath = imagePath;
             TimezoneOffsetSeconds = timezoneOffsetSeconds;
+            // List<int> Allah = new List<int>(){1,2,3,4,5,6,7,8,9,10};
+
 
             WeatherImage = LoadImageSafe(imagePath);
             GenerateForecast(Temperature);
