@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("avalonia-dz-templates")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ce07d295b768741ee33a3c5dd34182d9dff8a4ad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b90d0a06c4e4b1fb0d4e21aca5894f2779c64c45")]
 [assembly: System.Reflection.AssemblyProductAttribute("avalonia-dz-templates")]
 [assembly: System.Reflection.AssemblyTitleAttribute("avalonia-dz-templates")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

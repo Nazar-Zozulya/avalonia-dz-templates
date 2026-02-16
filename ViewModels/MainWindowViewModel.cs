@@ -25,7 +25,7 @@ namespace avalonia_dz_templates.ViewModels
         public ObservableCollection<CityViewModel> Cities { get; set; } = new();
         // Створюємо поле з вказаними в ньому доступними містами 
         public List<string> AvailableCities { get; }
-        
+
         // Створюємо приватну змінну для показу кнопки  
         private bool _showAddButton;
 
@@ -38,7 +38,7 @@ namespace avalonia_dz_templates.ViewModels
 
         // Створюємо змінну вибраного міста
         private CityViewModel _selectedCity = null!;
-        
+
         public CityViewModel SelectedCity
         {
             get => _selectedCity;
@@ -97,12 +97,6 @@ namespace avalonia_dz_templates.ViewModels
 
         public MainWindowViewModel()
         {
-
-
-            var  a = UpdateAllCitiesWeather();
-
-            System.Console.WriteLine(a);
-            
             // Доступні міста
             AvailableCities = new List<string>
             {
@@ -115,35 +109,31 @@ namespace avalonia_dz_templates.ViewModels
             // Сортуємо цей список
             AvailableCities.Sort();
 
-            // ?
+
+            // Завантажуємо дані
             LoadData();
-
-            // Робимо перевірку якщо міст немає то ми добавляєм київ(поки костиль і можливо треба буде заміннювати на те місто де ти знаходишся)
-            if (Cities.Count == 0)
-            {
-                Cities.Add(new CityViewModel("Київ", 0, "Завантаження...", 0, 0, "avares://WeatherApp/Assets/cloud.png",
-                    7200));
-            }
-
-            // Ставимо перше місто в нашому массиві вибранним
-            SelectedCity = Cities.First();
-
-            // ?
             _ = UpdateAllCitiesWeather();
 
-            // ?
+            // Якщо немає міст, додаємо Київ як замінник
+            if (Cities.Count == 0)
+            {
+                Cities.Add(new CityViewModel("Київ", 0, "Завантаження...", 0, 0, "avares://WeatherApp/Assets/cloud.png", 7200));
+            }
+
+            // Встановлюємо перше місто вибраним
+            SelectedCity = Cities.First();
+
+            // Команди
             SearchCommand = ReactiveCommand.CreateFromTask(async () =>
             {
                 if (string.IsNullOrWhiteSpace(SearchText)) return;
                 await SearchCityApi(SearchText);
             });
 
-            // Створюємо нове місто в массиві Cities при натисканні на створення міста через функцію ICommand.Execute 
             SaveCityCommand = ReactiveCommand.Create(() =>
             {
                 if (SelectedCity == null) return;
 
-                // ?
                 if (!Cities.Any(c => c.Name.Equals(SelectedCity.Name, StringComparison.OrdinalIgnoreCase)))
                 {
                     Cities.Add(SelectedCity);
@@ -152,53 +142,48 @@ namespace avalonia_dz_templates.ViewModels
                     ShowAddButton = false; // Ховаємо кнопку
                 }
             });
-            
+
             // Запускаємо відлік часу
             StartClock();
         }
 
-        // Task - Аналог promise. По суті обіцянка що функція буде повертати щось
-        
-        // Створємо метод який буде отримувати інформацію про погоду у нового міста
+        // Методи для отримання погоди та її оновлення
         private async Task SearchCityApi(string query)
         {
-            // Визиваємо API запрос для отримання данних про місто. query = назва міста
             var data = await _weatherService.GetWeatherAsync(query);
+            System.Console.WriteLine("data: ",data);
+
             if (data == null) return;
-            Console.WriteLine(data);
 
-            // Якщо погода хмарна ставимо дождливу картинку а якщо ні то сонячну(костиль)
-            string iconPath = data.List[0].Weather[0].Main.ToLower().Contains("cloud") || data.List[0].Weather[0].Main.ToLower().Contains("rain")
-                ? "avares://WeatherApp/Assets/cloud.png"
-                : "avares://WeatherApp/Assets/sun.png";
+            string iconPath = data.Weather[0].Main.ToLower().Contains("cloud") || data.Weather[0].Main.ToLower().Contains("rain")
+                ? "avares://avalonia_dz_templates/Assets/cloudy.png"
+                : "avares://avalonia_dz_templates/Assets/sun.png";
 
-            // Створюємо об'єкт нового міста
             var newCity = new CityViewModel(
-                data.List[0].Name,
-                (int)data.List[0].Main.Temp,
-                data.List[0].Weather[0].Description,
-                (int)data.List[0].Main.TempMax,
-                (int)data.List[0].Main.TempMin,
+                data.Name,
+                (int)data.Main.Temp,
+                data.Weather[0].Description,
+                (int)data.Main.TempMax,
+                (int)data.Main.TempMin,
                 iconPath,
-                data.List[0].Timezone
+                data.Timezone
             );
-            newCity.Humidity = data.List[0].Main.Humidity;
-            newCity.WindSpeed = (int)data.List[0].Wind.Speed;
-    
+
             try
             {
-                
-                var forecastData = await _weatherService.GetWeatherAsync(data.List[0].Name);
+                var forecastData = await _weatherService.GetForecastAsync(data.Name);
+
+                System.Console.WriteLine("forecastData: ", forecastData);
                 if (forecastData != null)
                 {
-                    foreach (var item in forecastData.List.Take(8))
+                    foreach (var item in forecastData.List.Take(15))
                     {
-                        DateTime date = DateTimeOffset.FromUnixTimeSeconds(item.Dt).DateTime.AddSeconds(data.List[0].Timezone);
+                        DateTime date = DateTimeOffset.FromUnixTimeSeconds(item.Dt).DateTime.AddSeconds(data.Timezone);
+                        string itemIconMain = item.Weather?.Count > 0 ? item.Weather[0].Main.ToLower() : "";
                         string itemIcon = item.Weather[0].Main.ToLower().Contains("cloud") || item.Weather[0].Main
                             .ToLower().Contains("rain")
-                            ? "avares://WeatherApp/Assets/cloud.png"
-                            : "avares://WeatherApp/Assets/sun.png";
-                        // Запускаємо час для нового городу
+                            ? "avares://avalonia_dz_templates/Assets/cloudy.png"
+                            : "avares://avalonia_dz_templates/Assets/sun.png";
                         newCity.HourlyForecasts.Add(new HourlyForecastViewModel(date.ToString("HH:mm"),
                             (int)item.Main.Temp, itemIcon));
                     }
@@ -209,24 +194,10 @@ namespace avalonia_dz_templates.ViewModels
             }
 
             SelectedCity = newCity;
-            CheckButtonVisibility(); // Перевіряємо кнопку
+            CheckButtonVisibility();
         }
 
-        // Перевіряємо коли кнопка додавання міста буде потрібна
-        private void CheckButtonVisibility()
-        {
-            if (SelectedCity == null)
-            {
-                ShowAddButton = false;
-                return;
-            }
-            // якщо немає ніяких городів то кнопка буде показуватися і наоборот
-            bool exists = Cities.Any(c => c.Name.Equals(SelectedCity.Name, StringComparison.OrdinalIgnoreCase));
-            ShowAddButton = !exists;
-        }
-        
-        
-        // функція для оновлення погоди у всіх містах які є в Cities
+        // Оновлюємо погоду для всіх міст
         private async Task UpdateAllCitiesWeather()
         {
             foreach (var city in Cities)
@@ -234,26 +205,21 @@ namespace avalonia_dz_templates.ViewModels
                 var data = await _weatherService.GetWeatherAsync(city.Name);
                 if (data != null)
                 {
-                    Console.WriteLine(data);
-                    
-                    city.Temperature = (int)data.List[0].Main.Temp;
-                    city.Description = data.List[0].Weather[0].Description;
-                    city.MaxTemp = (int)data.List[0].Main.TempMax;
-                    city.MinTemp = (int)data.List[0].Main.TempMin;
-                    city.Humidity = data.List[0].Main.Humidity;
-                    city.WindSpeed = (int)data.List[0].Wind.Speed;
-                    city.TimezoneOffsetSeconds = data.List[0].Timezone;
+                    city.Temperature = (int)data.Main.Temp;
+                    city.Description = data.Weather[0].Description;
+                    city.MaxTemp = (int)data.Main.TempMax;
+                    city.MinTemp = (int)data.Main.TempMin;
+                    city.TimezoneOffsetSeconds = data.Timezone;
 
-                    string icon = data.List[0].Weather[0].Main.ToLower().Contains("cloud") ||
-                                  data.List[0].Weather[0].Main.ToLower().Contains("rain")
-                        ? "avares://WeatherApp/Assets/cloud.png"
-                        : "avares://WeatherApp/Assets/sun.png";
+                    string icon = data.Weather[0].Main.ToLower().Contains("cloud") || data.Weather[0].Main.ToLower().Contains("rain")
+                        ? "avares://avalonia_dz_templates/Assets/cloudy.png"
+                        : "avares://avalonia_dz_templates/Assets/sun.png";
                     city.ImagePath = icon;
                     city.RestoreImage();
 
                     try
                     {
-                        var forecast = await _weatherService.GetWeatherAsync(city.Name);
+                        var forecast = await _weatherService.GetForecastAsync(city.Name);
                         if (forecast != null)
                         {
                             city.HourlyForecasts.Clear();
@@ -262,8 +228,8 @@ namespace avalonia_dz_templates.ViewModels
                                 DateTime d = DateTimeOffset.FromUnixTimeSeconds(item.Dt).DateTime
                                     .AddSeconds(city.TimezoneOffsetSeconds);
                                 string ic = item.Weather[0].Main.ToLower().Contains("cloud")
-                                    ? "avares://WeatherApp/Assets/cloud.png"
-                                    : "avares://WeatherApp/Assets/sun.png";
+                                    ? "avares://avalonia_dz_templates/Assets/cloudy.png"
+                                    : "avares://avalonia_dz_templates/Assets/sun.png";
                                 city.HourlyForecasts.Add(new HourlyForecastViewModel(d.ToString("HH:mm"),
                                     (int)item.Main.Temp, ic));
                             }
@@ -282,11 +248,8 @@ namespace avalonia_dz_templates.ViewModels
         {
             try
             {
-                // Вказуємо настройки Json Серіалайзера
                 var options = new JsonSerializerOptions { WriteIndented = true };
-                // Переводимо всі міста в json строку
                 string json = JsonSerializer.Serialize(Cities, options);
-                // сохраняємо їх в json файл
                 File.WriteAllText(SaveFileName, json);
             }
             catch
@@ -299,9 +262,7 @@ namespace avalonia_dz_templates.ViewModels
             if (!File.Exists(SaveFileName)) return;
             try
             {
-                // Получаємо текст с json
                 string json = File.ReadAllText(SaveFileName);
-                // Переводимо json строку обратно в коллекцію
                 var loaded = JsonSerializer.Deserialize<ObservableCollection<CityViewModel>>(json);
                 if (loaded != null)
                 {
@@ -336,10 +297,22 @@ namespace avalonia_dz_templates.ViewModels
             CurrentTime = target.ToString("HH:mm");
             CurrentDate = target.ToString("dd.MM.yyyy");
 
-            // Заповнюємо День Тижня
             var cult = new System.Globalization.CultureInfo("uk-UA");
             string day = target.ToString("dddd", cult);
             CurrentDayOfWeek = char.ToUpper(day[0]) + day.Substring(1);
+        }
+
+        // Перевіряємо коли кнопка додавання міста буде потрібна
+        private void CheckButtonVisibility()
+        {
+            if (SelectedCity == null)
+            {
+                ShowAddButton = false;
+                return;
+            }
+
+            bool exists = Cities.Any(c => c.Name.Equals(SelectedCity.Name, StringComparison.OrdinalIgnoreCase));
+            ShowAddButton = !exists;
         }
     }
 }

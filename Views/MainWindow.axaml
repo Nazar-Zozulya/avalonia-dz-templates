@@ -12,15 +12,15 @@
         ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaToDecorationsHint="True"
         xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
-        
+
         Title="avalonia_dz_templates">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-    
+
     <Grid ColumnDefinitions="370,*" Classes="MainGrid" >
         <StackPanel Classes="Sidebar" Grid.Column="0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 10">
@@ -49,7 +49,7 @@
                     <ListBox.ItemTemplate >
                         <DataTemplate >
                             <DockPanel LastChildFill="False">
-                                
+
                                 <StackPanel HorizontalAlignment="Left" DockPanel.Dock="Left">
                                     <StackPanel Orientation="Horizontal" Spacing="3">
                                         <Image Source="avares://avalonia-dz-templates/Assets/navigation.png" Width="16" />
@@ -79,23 +79,31 @@
 
         <StackPanel Grid.Column="1" Spacing="20" Margin="0, 10, 0, 0" >
             <StackPanel Classes="Header" Orientation="Horizontal">
-                <StackPanel Classes="SettingsBlock"> 
-                    <Button Classes="SettingsButton"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
+                <StackPanel Classes="SettingsBlock">
+                <Button Classes="SettingsButton"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
                     <TextBlock Text="Settings" Classes="SettingsLabel"/>
                 </StackPanel>
-                <AutoCompleteBox Classes="SearchInput" Watermark="Пошук" ItemsSource="{Binding AvailableCities}"/>
-            </StackPanel>
+                <AutoCompleteBox Classes="SearchInput"
+                                 Watermark="Введіть місто і натисніть Enter"
+                                 ItemsSource="{Binding AvailableCities}"
+                                 Text="{Binding SearchText, Mode=TwoWay}">
+
+                    <AutoCompleteBox.KeyBindings>
+                        <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" />
+                    </AutoCompleteBox.KeyBindings>
+
+                </AutoCompleteBox>            </StackPanel>
             <StackPanel Classes="ContentBlock" Orientation="Horizontal">
                 <views:CurrentWeatherView
-                    DataContext="{Binding SelectedCity}"
-                    /> 
+                DataContext="{Binding SelectedCity}"
+                />
                 <views:ClockView
-                    DataContext="{Binding $parent[Window].DataContext}"
+                DataContext="{Binding $parent[Window].DataContext}"
                 />
             </StackPanel>
             <views:HourlyForecastView DataContext="{Binding SelectedCity}"  />
             <views:DayForecastView DataContext="{Binding SelectedCity}"  />
 
         </StackPanel>
-    </Grid>    
+    </Grid>
 </Window>

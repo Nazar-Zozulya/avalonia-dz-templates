@@ -11,16 +11,13 @@ namespace avalonia_dz_templates.Services
 {
     public class WeatherService
     {
-        private const string ApiKey = "c3c7dd0d8e63c30b03f32d8c5b575f19";
-
-        private const string BaseUrl =
-            "https://api.openweathermap.org/data/2.5/weather?q={city}&appid={Key}&units=metric";
+        private const string ApiKey = "2ebad42a39eba021545ba0242709e9d3";
         
         private static readonly HttpClient _httpClient = new HttpClient();
 
         public async Task<WeatherResponse?> GetWeatherAsync(string city)
         {
-            string url = $"{BaseUrl}?weatherq={city}&appid={ApiKey}&units=metric&lang=ua";
+            string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={ApiKey}&units=metric&lang=ua";
 
             try
             {
@@ -34,6 +31,25 @@ namespace avalonia_dz_templates.Services
                 return null;
             }
         }
+        
+        public async Task<ForecastResponse?> GetForecastAsync(string city)
+        {
+            string url = $"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={ApiKey}&units=metric&lang=ua";
+    
+            try
+            {
+                var response = await _httpClient.GetAsync(url);
+                if (!response.IsSuccessStatusCode) return null;
+                string json = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<ForecastResponse>(json);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
     }
+    
+    
 }
