@@ -2,10 +2,13 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
+using LiveChartsCore;
 using System.Linq;
 using Avalonia.Markup.Xaml;
 using avalonia_dz_templates.ViewModels;
 using avalonia_dz_templates.Views;
+using LiveChartsCore.SkiaSharpView;
+using SkiaSharp;
 
 namespace avalonia_dz_templates;
 
@@ -14,6 +17,14 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+    LiveCharts.Configure(config =>
+    {
+        config.HasGlobalSKTypeface(SKFontManager.Default.MatchCharacter('a'));
+
+        config.HasMap<HourlyForecastViewModel>((forecast, index) => 
+            new LiveChartsCore.Kernel.Coordinate(index, forecast.Temprature)
+        );
+    });
     }
 
     public override void OnFrameworkInitializationCompleted()

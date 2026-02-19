@@ -15,26 +15,26 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = avalonia-dz-templates
-build_property.ProjectDir = c:\avalonia\avalonia-dz-templates\
+build_property.ProjectDir = C:\avalonia\avalonia-dz-templates\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[c:/avalonia/avalonia-dz-templates/App.axaml]
+[C:/avalonia/avalonia-dz-templates/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[c:/avalonia/avalonia-dz-templates/Views/ClockView.axaml]
+[C:/avalonia/avalonia-dz-templates/Views/ClockView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[c:/avalonia/avalonia-dz-templates/Views/CurrentWeatherView.axaml]
+[C:/avalonia/avalonia-dz-templates/Views/CurrentWeatherView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[c:/avalonia/avalonia-dz-templates/Views/DayForecastView.axaml]
+[C:/avalonia/avalonia-dz-templates/Views/DayForecastView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[c:/avalonia/avalonia-dz-templates/Views/HourlyForecastView.axaml]
+[C:/avalonia/avalonia-dz-templates/Views/HourlyForecastView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[c:/avalonia/avalonia-dz-templates/Views/MainWindow.axaml]
+[C:/avalonia/avalonia-dz-templates/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

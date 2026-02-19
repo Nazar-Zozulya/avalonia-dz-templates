@@ -5,6 +5,11 @@ using Avalonia.Platform;
 using ReactiveUI;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.Measure;
+using SkiaSharp;
+using LiveChartsCore.SkiaSharpView.Painting;
 
 namespace avalonia_dz_templates.ViewModels
 {
@@ -98,6 +103,11 @@ namespace avalonia_dz_templates.ViewModels
 
         public List<int> Allah { get; } = new() {1,2,3,4,5,6,7,8,9,10};
 
+
+
+        public ISeries[] Series { get; set; } = Array.Empty<ISeries>();
+        public Axis[] XAxes { get; set; } = { new Axis() };
+        public Axis[] YAxes { get; set; } = { new Axis() };
         public List<int> ForecastFor12H { get; } = new(40) {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40};
          public CityViewModel() 
         { 
@@ -115,37 +125,62 @@ namespace avalonia_dz_templates.ViewModels
             MinTemp = min;
             ImagePath = imagePath;
             TimezoneOffsetSeconds = timezoneOffsetSeconds;
-            // List<int> Allah = new List<int>(){1,2,3,4,5,6,7,8,9,10};
+
+            
+
+
+            Series = new ISeries[]
+            {
+                new ColumnSeries<HourlyForecastViewModel>
+                {
+                    Values = _hourlyForecasts,
+                    Fill = new SolidColorPaint(SKColors.LightBlue),
+                    Stroke = null,
+                }
+            };
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    // Labels = new[] {"12:00", "15:00", "18:00", "21:00", "00:00", "03:00"},
+                    IsVisible = false,
+                    // Padding = new LiveChartsCore.Drawing.Padding(0, 0, 0, 0)
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {   
+                    Position = AxisPosition.End,
+                    Labeler = value => $"{value}°C",
+                    MinLimit = -20,
+                    MaxLimit = 40,
+                    MinStep = 5,
+                    LabelsPaint = new SolidColorPaint(SKColors.Gray),
+                    // SeparatorsPaint = new SolidColorPaint(SKColors.LightGray) { StrokeThickness = 1 },
+                    // ForceStepToMin ,
+                }
+            };
 
 
             WeatherImage = LoadImageSafe(imagePath);
-            GenerateForecast(Temperature);
         }
 
         // --- МЕТОДИ ---
 
+        // public void AddTemperature(double temp)
+        // {
+        //     _hourlyForecasts.Add(new HourlyForecastViewModel(temp));
+        // }
+
+
         public void RestoreImage()
         {
             if (!string.IsNullOrEmpty(ImagePath)) WeatherImage = LoadImageSafe(ImagePath);
-            if (HourlyForecasts.Count == 0) GenerateForecast(Temperature);
         }
-
-        private void GenerateForecast(int baseTemp)
-        {
-            HourlyForecasts.Clear();
-            var nextHour = DateTime.Now.Date.AddHours(DateTime.Now.Hour + 1);
-            var rnd = new Random();
-
-            for (int i = 0; i < 24; i++)
-            {
-                var time = nextHour.AddHours(i).ToString("HH");
-                int t = baseTemp + rnd.Next(-3, 4);
-                string icon = (i % 2 == 0) ? "avares://WeatherApp/Assets/cloud.png" : "avares://WeatherApp/Assets/sun.png";
-                HourlyForecasts.Add(new HourlyForecastViewModel(time, t, icon));
-            }
-        }
-        
-private Bitmap? LoadImageSafe(string path)
+        private Bitmap? LoadImageSafe(string path)
         {
             try { return new Bitmap(AssetLoader.Open(new Uri(path))); } catch { return null; }
         }

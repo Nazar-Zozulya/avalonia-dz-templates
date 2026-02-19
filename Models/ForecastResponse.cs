@@ -16,7 +16,7 @@ namespace avalonia_dz_templates.Models
     {
         [JsonPropertyName("dt")] public long Dt { get; set; }
         
-        [JsonPropertyName("Main")] public ForecastMain Main { get; set; }
+        [JsonPropertyName("main")] public ForecastMain Main { get; set; }
         
         [JsonPropertyName("weather")] public List<ForecastWeather> Weather { get; set; }
     }

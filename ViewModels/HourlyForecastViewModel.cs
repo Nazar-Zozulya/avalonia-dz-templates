@@ -14,6 +14,9 @@ namespace avalonia_dz_templates.ViewModels
         {
             Time = time;
             Temprature = temprature;
+            System.Console.WriteLine("time: " + time);
+
+            System.Console.WriteLine("iconPath: " + iconPath);
 
             if (string.IsNullOrEmpty(iconPath)) return;
 
@@ -21,8 +24,10 @@ namespace avalonia_dz_templates.ViewModels
             {
                 Icon = new Bitmap(AssetLoader.Open(new Uri(iconPath)));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                System.Console.WriteLine("icon none");
+                System.Console.WriteLine(ex);
                 Icon = null;
             }
         }

@@ -10,6 +10,9 @@ using Avalonia.Threading;
 using ReactiveUI;
 using avalonia_dz_templates.Models;
 using avalonia_dz_templates.Services;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.Measure;
 
 namespace avalonia_dz_templates.ViewModels
 {
@@ -95,6 +98,8 @@ namespace avalonia_dz_templates.ViewModels
             set => this.RaiseAndSetIfChanged(ref _currentDayOfWeek, value);
         }
 
+        
+
         public MainWindowViewModel()
         {
             // Доступні міста
@@ -117,7 +122,9 @@ namespace avalonia_dz_templates.ViewModels
             // Якщо немає міст, додаємо Київ як замінник
             if (Cities.Count == 0)
             {
-                Cities.Add(new CityViewModel("Київ", 0, "Завантаження...", 0, 0, "avares://WeatherApp/Assets/cloud.png", 7200));
+
+
+                Cities.Add(new CityViewModel("Київ", 0, "Завантаження...", 0, 0, "avares://avalonia_dz_templates/Assets/cloudy.png", 7200));
             }
 
             // Встановлюємо перше місто вибраним
@@ -143,6 +150,9 @@ namespace avalonia_dz_templates.ViewModels
                 }
             });
 
+
+
+
             // Запускаємо відлік часу
             StartClock();
         }
@@ -151,13 +161,12 @@ namespace avalonia_dz_templates.ViewModels
         private async Task SearchCityApi(string query)
         {
             var data = await _weatherService.GetWeatherAsync(query);
-            System.Console.WriteLine("data: ",data);
 
             if (data == null) return;
 
             string iconPath = data.Weather[0].Main.ToLower().Contains("cloud") || data.Weather[0].Main.ToLower().Contains("rain")
-                ? "avares://avalonia_dz_templates/Assets/cloudy.png"
-                : "avares://avalonia_dz_templates/Assets/sun.png";
+                ? "avares://avalonia-dz-templates/Assets/cloudy.png"
+                : "avares://avalonia-dz-templates/Assets/sun.png";
 
             var newCity = new CityViewModel(
                 data.Name,
@@ -173,24 +182,31 @@ namespace avalonia_dz_templates.ViewModels
             {
                 var forecastData = await _weatherService.GetForecastAsync(data.Name);
 
-                System.Console.WriteLine("forecastData: ", forecastData);
                 if (forecastData != null)
                 {
                     foreach (var item in forecastData.List.Take(15))
                     {
+                        if (item == null)
+                            continue;
+
+                        // if (item.Main == null)
+                        //     continue;
+
+                        if (item.Weather == null || item.Weather.Count == 0)
+                            continue;
+
+
                         DateTime date = DateTimeOffset.FromUnixTimeSeconds(item.Dt).DateTime.AddSeconds(data.Timezone);
                         string itemIconMain = item.Weather?.Count > 0 ? item.Weather[0].Main.ToLower() : "";
-                        string itemIcon = item.Weather[0].Main.ToLower().Contains("cloud") || item.Weather[0].Main
-                            .ToLower().Contains("rain")
-                            ? "avares://avalonia_dz_templates/Assets/cloudy.png"
-                            : "avares://avalonia_dz_templates/Assets/sun.png";
+                        string itemIcon = GetHourlyIconPath(itemIconMain);
                         newCity.HourlyForecasts.Add(new HourlyForecastViewModel(date.ToString("HH:mm"),
                             (int)item.Main.Temp, itemIcon));
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
             }
 
             SelectedCity = newCity;
@@ -211,7 +227,7 @@ namespace avalonia_dz_templates.ViewModels
                     city.MinTemp = (int)data.Main.TempMin;
                     city.TimezoneOffsetSeconds = data.Timezone;
 
-                    string icon = data.Weather[0].Main.ToLower().Contains("cloud") || data.Weather[0].Main.ToLower().Contains("rain")
+                    string icon = data.Weather[0].Main.ToLower().Contains("clouds") || data.Weather[0].Main.ToLower().Contains("rain") // snow
                         ? "avares://avalonia_dz_templates/Assets/cloudy.png"
                         : "avares://avalonia_dz_templates/Assets/sun.png";
                     city.ImagePath = icon;
@@ -227,9 +243,7 @@ namespace avalonia_dz_templates.ViewModels
                             {
                                 DateTime d = DateTimeOffset.FromUnixTimeSeconds(item.Dt).DateTime
                                     .AddSeconds(city.TimezoneOffsetSeconds);
-                                string ic = item.Weather[0].Main.ToLower().Contains("cloud")
-                                    ? "avares://avalonia_dz_templates/Assets/cloudy.png"
-                                    : "avares://avalonia_dz_templates/Assets/sun.png";
+                                string ic = GetHourlyIconPath(item.Weather[0].Main);
                                 city.HourlyForecasts.Add(new HourlyForecastViewModel(d.ToString("HH:mm"),
                                     (int)item.Main.Temp, ic));
                             }
@@ -277,6 +291,46 @@ namespace avalonia_dz_templates.ViewModels
             catch
             {
             }
+        }
+
+        private string GetHourlyIconPath(string weatherMain)
+        {
+            if (string.IsNullOrEmpty(weatherMain))
+                return "avares://avalonia_dz_templates/Assets/unknown-files.png";
+
+            weatherMain = weatherMain.ToLower();
+            switch (weatherMain)
+            {
+                case "clouds":
+                    return "avares://avalonia-dz-templates/Assets/wb/cloudy.png";
+                case "rain":
+                    return "avares://avalonia-dz-templates/Assets/wb/rainy.png";
+                case "snow":
+                    return "avares://avalonia-dz-templates/Assets/wb/snowy.png";
+                default:
+                    return "avares://avalonia-dz-templates/Assets/wb/sunny.png";
+            }
+
+        }
+
+        private string GetIconPath(string weatherMain)
+        {
+            if (string.IsNullOrEmpty(weatherMain))
+                return "avares://avalonia_dz_templates/Assets/unknown-files.png";
+
+            weatherMain = weatherMain.ToLower();
+            switch (weatherMain)
+            {
+                case "clouds":
+                    return "avares://avalonia-dz-templates/Assets/cloudy.png";
+                case "rain":
+                    return "avares://avalonia-dz-templates/Assets/wb/rainy.png";
+                case "snow":
+                    return "avares://avalonia-dz-templates/Assets/wb/snowy.png";
+                default:
+                    return "avares://avalonia-dz-templates/Assets/wb/sunny.png";
+            }
+
         }
 
         private void StartClock()

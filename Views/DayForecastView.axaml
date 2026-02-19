@@ -3,9 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:avalonia_dz_templates.ViewModels"
+             xmlns:lvc= "using:LiveChartsCore.SkiaSharpView.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="250" d:Width="800" d:Height="250"
              x:Class="avalonia_dz_templates.Views.DayForecastView"
-             x:DataType="vm:CityViewModel">
+             x:DataType="vm:CityViewModel"
+             >
 
     <Border Background="#22000000" CornerRadius="15" Height="200" Width="800" Margin="0,0,0,0">
         <Grid RowDefinitions="Auto, Auto, *">
@@ -30,10 +32,11 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    
 
                     <!-- Нижний график с бордером -->
                     <Border Grid.Row="1" Margin="10" BorderBrush="#000" BorderThickness="1" CornerRadius="8" Padding="5">
-                        <ItemsControl ItemsSource="{Binding ForecastFor12H}" VerticalAlignment="Stretch">
+                        <!-- <ItemsControl ItemsSource="{Binding ForecastFor12H}" VerticalAlignment="Stretch">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal" Spacing="3" VerticalAlignment="Bottom"/>
@@ -45,7 +48,8 @@
                                             VerticalAlignment="Bottom" Height="{Binding}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
-                        </ItemsControl>
+                        </ItemsControl> -->
+                        <lvc:CartesianChart Series="{Binding Series}" XAxes="{Binding XAxes}" YAxes="{Binding YAxes}" />
                     </Border>
 
                 </Grid>
