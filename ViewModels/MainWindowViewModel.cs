@@ -117,7 +117,9 @@ namespace avalonia_dz_templates.ViewModels
 
             // Завантажуємо дані
             LoadData();
-            _ = UpdateAllCitiesWeather();
+            // _ = UpdateAllCitiesWeather();
+
+            Task.Run(async () => {await Task.Delay(1000); await UpdateAllCitiesWeather(); });
 
             // Якщо немає міст, додаємо Київ як замінник
             if (Cities.Count == 0)
@@ -164,9 +166,12 @@ namespace avalonia_dz_templates.ViewModels
 
             if (data == null) return;
 
-            string iconPath = data.Weather[0].Main.ToLower().Contains("cloud") || data.Weather[0].Main.ToLower().Contains("rain")
-                ? "avares://avalonia-dz-templates/Assets/cloudy.png"
-                : "avares://avalonia-dz-templates/Assets/sun.png";
+            string iconPath = GetIconPath(data.Weather[0].Main.ToLower());
+
+
+            // string iconPath = data.Weather[0].Main.ToLower().Contains("cloud") || data.Weather[0].Main.ToLower().Contains("rain")
+            //     ? "avares://avalonia-dz-templates/Assets/cloudy.png"
+            //     : "avares://avalonia-dz-templates/Assets/sun.png";
 
             var newCity = new CityViewModel(
                 data.Name,
@@ -227,9 +232,11 @@ namespace avalonia_dz_templates.ViewModels
                     city.MinTemp = (int)data.Main.TempMin;
                     city.TimezoneOffsetSeconds = data.Timezone;
 
-                    string icon = data.Weather[0].Main.ToLower().Contains("clouds") || data.Weather[0].Main.ToLower().Contains("rain") // snow
-                        ? "avares://avalonia_dz_templates/Assets/cloudy.png"
-                        : "avares://avalonia_dz_templates/Assets/sun.png";
+                    string icon = GetIconPath(data.Weather[0].Main);
+
+                    // string icon = data.Weather[0].Main.ToLower().Contains("clouds") || data.Weather[0].Main.ToLower().Contains("rain") // snow
+                    //     ? "avares://avalonia-dz-templates/Assets/cloudy.png"
+                    //     : "avares://avalonia-dz-templates/Assets/sun.png";
                     city.ImagePath = icon;
                     city.RestoreImage();
 
@@ -239,7 +246,7 @@ namespace avalonia_dz_templates.ViewModels
                         if (forecast != null)
                         {
                             city.HourlyForecasts.Clear();
-                            foreach (var item in forecast.List.Take(8))
+                            foreach (var item in forecast.List.Take(15))
                             {
                                 DateTime d = DateTimeOffset.FromUnixTimeSeconds(item.Dt).DateTime
                                     .AddSeconds(city.TimezoneOffsetSeconds);
@@ -296,7 +303,7 @@ namespace avalonia_dz_templates.ViewModels
         private string GetHourlyIconPath(string weatherMain)
         {
             if (string.IsNullOrEmpty(weatherMain))
-                return "avares://avalonia_dz_templates/Assets/unknown-files.png";
+                return "avares://avalonia-dz-templates/Assets/unknown-files.png";
 
             weatherMain = weatherMain.ToLower();
             switch (weatherMain)
@@ -316,19 +323,20 @@ namespace avalonia_dz_templates.ViewModels
         private string GetIconPath(string weatherMain)
         {
             if (string.IsNullOrEmpty(weatherMain))
-                return "avares://avalonia_dz_templates/Assets/unknown-files.png";
+                return "avares://avalonia-dz-templates/Assets/unknown-files.png";
 
             weatherMain = weatherMain.ToLower();
+            System.Console.WriteLine("aaa:" + weatherMain);
             switch (weatherMain)
             {
                 case "clouds":
-                    return "avares://avalonia-dz-templates/Assets/cloudy.png";
+                    return "avares://avalonia-dz-templates/Assets/clouds.png";
                 case "rain":
-                    return "avares://avalonia-dz-templates/Assets/wb/rainy.png";
+                    return "avares://avalonia-dz-templates/Assets/rain.png";
                 case "snow":
-                    return "avares://avalonia-dz-templates/Assets/wb/snowy.png";
+                    return "avares://avalonia-dz-templates/Assets/snow.png";
                 default:
-                    return "avares://avalonia-dz-templates/Assets/wb/sunny.png";
+                    return "avares://avalonia-dz-templates/Assets/sun.png";
             }
 
         }

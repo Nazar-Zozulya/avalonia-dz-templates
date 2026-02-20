@@ -83,16 +83,28 @@
                 <Button Classes="SettingsButton"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
                     <TextBlock Text="Settings" Classes="SettingsLabel"/>
                 </StackPanel>
-                <AutoCompleteBox Classes="SearchInput"
-                                 Watermark="Введіть місто і натисніть Enter"
-                                 ItemsSource="{Binding AvailableCities}"
-                                 Text="{Binding SearchText, Mode=TwoWay}">
-
-                    <AutoCompleteBox.KeyBindings>
-                        <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" />
-                    </AutoCompleteBox.KeyBindings>
-
-                </AutoCompleteBox>            </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Button Content="+"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        Foreground="White"
+                        Command="{Binding SaveCityCommand}"
+                        IsVisible="{Binding ShowAddButton}"
+                        ToolTip.Tip="Додати до списку збережених міст" />
+                        <AutoCompleteBox Classes="SearchInput"
+                                         Watermark="Введіть місто і натисніть Enter"
+                                         ItemsSource="{Binding AvailableCities}"
+                                         Text="{Binding SearchText, Mode=TwoWay}">
+        
+                            <AutoCompleteBox.KeyBindings>
+                                <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" />
+                            </AutoCompleteBox.KeyBindings>
+        
+                        </AutoCompleteBox>            
+                </StackPanel>
+            </StackPanel>
             <StackPanel Classes="ContentBlock" Orientation="Horizontal">
                 <views:CurrentWeatherView
                 DataContext="{Binding SelectedCity}"

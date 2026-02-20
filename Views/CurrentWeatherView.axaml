@@ -44,7 +44,7 @@
     
                     <Image
                         Classes="CWWeatherIcon"
-                        Source="{Binding ImagePath}"
+                        Source="{Binding WeatherImage}"
                         />
     
                     <TextBlock

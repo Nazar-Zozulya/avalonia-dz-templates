@@ -36,48 +36,55 @@ namespace avalonia_dz_templates.ViewModels
             set => this.RaiseAndSetIfChanged(ref _name, value);
         }
 
+        [JsonIgnore]
         public string Description
         {
             get => _description;
             set => this.RaiseAndSetIfChanged(ref _description, value); // Тепер екран оновиться!
         }
 
+        [JsonIgnore]
         public int Temperature
         {
             get => _temperature;
             set => this.RaiseAndSetIfChanged(ref _temperature, value);
         }
 
+        [JsonIgnore]
         public int MaxTemp
         {
             get => _maxTemp;
             set => this.RaiseAndSetIfChanged(ref _maxTemp, value);
         }
 
+        [JsonIgnore]
         public int MinTemp
         {
             get => _minTemp;
             set => this.RaiseAndSetIfChanged(ref _minTemp, value);
         }
 
-        public int Humidity
-        {
-            get => _humidity;
-            set => this.RaiseAndSetIfChanged(ref _humidity, value);
-        }
+        // public int Humidity
+        // {
+        //     get => _humidity;
+        //     set => this.RaiseAndSetIfChanged(ref _humidity, value);
+        // }
 
+        [JsonIgnore]
         public int WindSpeed
         {
             get => _windSpeed;
             set => this.RaiseAndSetIfChanged(ref _windSpeed, value);
         }
 
+        [JsonIgnore]
         public int TimezoneOffsetSeconds
         {
             get => _timezoneOffsetSeconds;
             set => this.RaiseAndSetIfChanged(ref _timezoneOffsetSeconds, value);
         }
 
+        [JsonIgnore]
         public string ImagePath
         {
             get => _imagePath;
@@ -100,18 +107,57 @@ namespace avalonia_dz_templates.ViewModels
 
         // --- КОНСТРУКТОРИ ---
 
+        [JsonIgnore]
+        public List<int> Icons { get; } = new() {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-        public List<int> Allah { get; } = new() {1,2,3,4,5,6,7,8,9,10};
-
-
-
+        [JsonIgnore]
         public ISeries[] Series { get; set; } = Array.Empty<ISeries>();
+
+        [JsonIgnore]
         public Axis[] XAxes { get; set; } = { new Axis() };
+
+        [JsonIgnore]
         public Axis[] YAxes { get; set; } = { new Axis() };
-        public List<int> ForecastFor12H { get; } = new(40) {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40};
-         public CityViewModel() 
+
+        public CityViewModel() 
         { 
             // Ініціалізація для JSON
+
+            Series = new ISeries[]
+            {
+                new ColumnSeries<HourlyForecastViewModel>
+                {
+                    Values = _hourlyForecasts,
+                    Fill = new SolidColorPaint(SKColors.LightBlue),
+                    Stroke = null,
+                }
+            };
+
+            XAxes = new Axis[]
+            {
+                new Axis
+                {
+                    // Labels = new[] {"12:00", "15:00", "18:00", "21:00", "00:00", "03:00"},
+                    IsVisible = false,
+                    // Padding = new LiveChartsCore.Drawing.Padding(0, 0, 0, 0)
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {   
+                    Position = AxisPosition.End,
+                    Labeler = value => $"{value}°C",
+                    MinLimit = -20,
+                    MaxLimit = 40,
+                    MinStep = 5,
+                    LabelsPaint = new SolidColorPaint(SKColors.Gray),
+                    // SeparatorsPaint = new SolidColorPaint(SKColors.LightGray) { StrokeThickness = 1 },
+                    // ForceStepToMin ,
+                }
+            };
+
         }
 
         public CityViewModel(string name, int temp, string desc, int max, int min, string imagePath, int timezoneOffsetSeconds)
@@ -164,6 +210,7 @@ namespace avalonia_dz_templates.ViewModels
                 }
             };
 
+            System.Console.WriteLine(1123123123123);
 
             WeatherImage = LoadImageSafe(imagePath);
         }
@@ -182,6 +229,7 @@ namespace avalonia_dz_templates.ViewModels
         }
         private Bitmap? LoadImageSafe(string path)
         {
+            System.Console.WriteLine("12334:"  + path);
             try { return new Bitmap(AssetLoader.Open(new Uri(path))); } catch { return null; }
         }
     }

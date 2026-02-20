@@ -20,7 +20,7 @@
             <Grid Grid.Row="2" ColumnDefinitions="*">
                 <Grid RowDefinitions="Auto,*">
                     <!-- Верхний список с иконками -->
-                    <ItemsControl ItemsSource="{Binding Allah}">
+                    <ItemsControl ItemsSource="{Binding Icons}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" Spacing="5"/>

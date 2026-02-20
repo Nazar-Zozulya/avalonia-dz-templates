@@ -9,6 +9,8 @@ using avalonia_dz_templates.ViewModels;
 using avalonia_dz_templates.Views;
 using LiveChartsCore.SkiaSharpView;
 using SkiaSharp;
+using Avalonia.ReactiveUI;
+using ReactiveUI;
 
 namespace avalonia_dz_templates;
 
@@ -21,7 +23,7 @@ public partial class App : Application
     {
         config.HasGlobalSKTypeface(SKFontManager.Default.MatchCharacter('a'));
 
-        config.HasMap<HourlyForecastViewModel>((forecast, index) => 
+        config.HasMap<HourlyForecastViewModel>((forecast, index) =>  
             new LiveChartsCore.Kernel.Coordinate(index, forecast.Temprature)
         );
     });
@@ -31,6 +33,7 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
