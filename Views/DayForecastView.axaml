@@ -28,7 +28,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Image Source="avares://avalonia-dz-templates/Assets/sun-with-clouds.png" Height="30"/>
+                                <Image Source="avares://avalonia-dz-templates/Assets/forecast/sun-with-clouds.png" Height="30"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

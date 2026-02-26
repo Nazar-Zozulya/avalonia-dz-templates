@@ -105,11 +105,96 @@ namespace avalonia_dz_templates.ViewModels
             // Доступні міста
             AvailableCities = new List<string>
             {
-                "Київ", "Львів", "Харків", "Одеса", "Дніпро", "Запоріжжя", "Вінниця", "Полтава", "Чернігів", "Черкаси",
-                "Житомир", "Суми", "Хмельницький", "Чернівці", "Рівне", "Івано-Франківськ", "Тернопіль", "Луцьк",
-                "Ужгород",
-                "Варшава", "Лондон", "Париж", "Берлін", "Мюнхен", "Рим", "Мілан", "Мадрид", "Барселона", "Нью-Йорк",
-                "Токіо"
+                // ===== Украина =====
+                "Київ", "Kyiv",
+                "Львів", "Lviv",
+                "Харків", "Kharkiv",
+                "Одеса", "Odesa",
+                "Дніпро", "Dnipro",
+                "Запоріжжя", "Zaporizhzhia",
+                "Вінниця", "Vinnytsia",
+                "Полтава", "Poltava",
+                "Чернігів", "Chernihiv",
+                "Черкаси", "Cherkasy",
+                "Житомир", "Zhytomyr",
+                "Суми", "Sumy",
+                "Хмельницький", "Khmelnytskyi",
+                "Чернівці", "Chernivtsi",
+                "Рівне", "Rivne",
+                "Івано-Франківськ", "Ivano-Frankivsk",
+                "Тернопіль", "Ternopil",
+                "Луцьк", "Lutsk",
+                "Ужгород", "Uzhhorod",
+                "Миколаїв", "Mykolaiv",
+                "Херсон", "Kherson",
+                "Кропивницький", "Kropyvnytskyi",
+                "Кривий Ріг", "Kryvyi Rih",
+
+                // ===== Польща =====
+                "Варшава", "Warsaw",
+                "Краків", "Krakow",
+                "Вроцлав", "Wroclaw",
+                "Гданськ", "Gdansk",
+                "Познань", "Poznan",
+                "Лодзь", "Lodz",
+
+                // ===== Німеччина =====
+                "Берлін", "Berlin",
+                "Мюнхен", "Munich",
+                "Гамбург", "Hamburg",
+                "Франкфурт", "Frankfurt",
+                "Кельн", "Cologne",
+                "Штутгарт", "Stuttgart",
+
+                // ===== Франція =====
+                "Париж", "Paris",
+                "Марсель", "Marseille",
+                "Ліон", "Lyon",
+                "Тулуза", "Toulouse",
+                "Ніцца", "Nice",
+
+                // ===== Італія =====
+                "Рим", "Rome",
+                "Мілан", "Milan",
+                "Неаполь", "Naples",
+                "Турин", "Turin",
+                "Венеція", "Venice",
+
+                // ===== Іспанія =====
+                "Мадрид", "Madrid",
+                "Барселона", "Barcelona",
+                "Валенсія", "Valencia",
+                "Севілья", "Seville",
+
+                // ===== Велика Британія =====
+                "Лондон", "London",
+                "Манчестер", "Manchester",
+                "Бірмінгем", "Birmingham",
+                "Ліверпуль", "Liverpool",
+                "Глазго", "Glasgow",
+                "Единбург", "Edinburgh",
+
+                // ===== Інша Європа =====
+                "Прага", "Prague",
+                "Відень", "Vienna",
+                "Амстердам", "Amsterdam",
+                "Брюссель", "Brussels",
+                "Цюрих", "Zurich",
+                "Стокгольм", "Stockholm",
+                "Осло", "Oslo",
+                "Копенгаген", "Copenhagen",
+                "Гельсінкі", "Helsinki",
+                "Лісабон", "Lisbon",
+                "Афіни", "Athens",
+                "Будапешт", "Budapest",
+                "Бухарест", "Bucharest",
+                "Братислава", "Bratislava",
+                "Вільнюс", "Vilnius",
+                "Рига", "Riga",
+                "Таллінн", "Tallinn",
+                "Софія", "Sofia",
+                "Белград", "Belgrade",
+                "Загреб", "Zagreb"
             };
             // Сортуємо цей список
             AvailableCities.Sort();
@@ -135,7 +220,13 @@ namespace avalonia_dz_templates.ViewModels
             // Команди
             SearchCommand = ReactiveCommand.CreateFromTask(async () =>
             {
-                if (string.IsNullOrWhiteSpace(SearchText)) return;
+                if (string.IsNullOrWhiteSpace(SearchText))
+                {
+                    Console.WriteLine("city not found");
+                    return;
+                }
+                System.Console.WriteLine("Search Text:" + SearchText);
+                await Task.Delay(1000);
                 await SearchCityApi(SearchText);
             });
 
@@ -163,6 +254,8 @@ namespace avalonia_dz_templates.ViewModels
         private async Task SearchCityApi(string query)
         {
             var data = await _weatherService.GetWeatherAsync(query);
+            
+            System.Console.WriteLine(123);
 
             if (data == null) return;
 
@@ -213,9 +306,15 @@ namespace avalonia_dz_templates.ViewModels
             {
                 System.Console.WriteLine(ex.Message);
             }
-
-            SelectedCity = newCity;
+            await Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                SelectedCity = null;
+                SelectedCity = newCity;
+                this.RaisePropertyChanged(nameof(SelectedCity));
+            });
             CheckButtonVisibility();
+            // SelectedCity = newCity;
+            // CheckButtonVisibility();
         }
 
         // Оновлюємо погоду для всіх міст
@@ -326,17 +425,17 @@ namespace avalonia_dz_templates.ViewModels
                 return "avares://avalonia-dz-templates/Assets/unknown-files.png";
 
             weatherMain = weatherMain.ToLower();
-            System.Console.WriteLine("aaa:" + weatherMain);
+            // System.Console.WriteLine("aaa:" + weatherMain);
             switch (weatherMain)
             {
                 case "clouds":
-                    return "avares://avalonia-dz-templates/Assets/clouds.png";
+                    return "avares://avalonia-dz-templates/Assets/forecast/clouds.png";
                 case "rain":
-                    return "avares://avalonia-dz-templates/Assets/rain.png";
+                    return "avares://avalonia-dz-templates/Assets/forecast/rain.png";
                 case "snow":
-                    return "avares://avalonia-dz-templates/Assets/snow.png";
+                    return "avares://avalonia-dz-templates/Assets/forecast/snow.png";
                 default:
-                    return "avares://avalonia-dz-templates/Assets/sun.png";
+                    return "avares://avalonia-dz-templates/Assets/forecast/sun.png";
             }
 
         }

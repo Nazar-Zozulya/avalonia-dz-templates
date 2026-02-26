@@ -53,9 +53,9 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
-        <Style Selector="TextBox.SearchInput">
-            <Setter Property="Width" Value="260" />
-            <Setter Property="Height" Value="40" />
+        <Style Selector="AutoCompleteBox.SearchInput">
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Height" Value="30" />
         </Style>
 
         <Style Selector="StackPanel.ContentBlock">

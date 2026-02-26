@@ -29,7 +29,7 @@
                 </Button>
             </StackPanel>
             <StackPanel>
-                <ListBox Background="Transparent" SelectionChanged="SelectionChanged" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}">
+                <ListBox Background="Transparent" SelectionChanged="SelectionChanged" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" ScrollViewer.VerticalScrollBarVisibility="Visible" >
                     <ListBox.Styles>
                         <Style Selector="ListBoxItem">
                             <Setter Property="CornerRadius" Value="8" />
@@ -84,11 +84,12 @@
                     <TextBlock Text="Settings" Classes="SettingsLabel"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Spacing="10">
-                    <Button Content="+"
-                        FontSize="24"
+                    <Button Content="Додати"
+                        FontSize="14"
+                        Height= "30"
+                        Background="#33000000"
                         FontWeight="Bold"
                         VerticalAlignment="Center"
-                        Background="Transparent"
                         Foreground="White"
                         Command="{Binding SaveCityCommand}"
                         IsVisible="{Binding ShowAddButton}"

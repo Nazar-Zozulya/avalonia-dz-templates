@@ -14,9 +14,6 @@ namespace avalonia_dz_templates.ViewModels
         {
             Time = time;
             Temprature = temprature;
-            System.Console.WriteLine("time: " + time);
-
-            System.Console.WriteLine("iconPath: " + iconPath);
 
             if (string.IsNullOrEmpty(iconPath)) return;
 

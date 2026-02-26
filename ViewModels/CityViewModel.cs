@@ -172,6 +172,9 @@ namespace avalonia_dz_templates.ViewModels
             ImagePath = imagePath;
             TimezoneOffsetSeconds = timezoneOffsetSeconds;
 
+
+            System.Console.WriteLine("Name: " + name);
+
             
 
 
@@ -210,8 +213,6 @@ namespace avalonia_dz_templates.ViewModels
                 }
             };
 
-            System.Console.WriteLine(1123123123123);
-
             WeatherImage = LoadImageSafe(imagePath);
         }
 
@@ -229,7 +230,6 @@ namespace avalonia_dz_templates.ViewModels
         }
         private Bitmap? LoadImageSafe(string path)
         {
-            System.Console.WriteLine("12334:"  + path);
             try { return new Bitmap(AssetLoader.Open(new Uri(path))); } catch { return null; }
         }
     }
