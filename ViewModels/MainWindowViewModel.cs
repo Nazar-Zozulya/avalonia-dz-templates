@@ -313,8 +313,6 @@ namespace avalonia_dz_templates.ViewModels
                 this.RaisePropertyChanged(nameof(SelectedCity));
             });
             CheckButtonVisibility();
-            // SelectedCity = newCity;
-            // CheckButtonVisibility();
         }
 
         // Оновлюємо погоду для всіх міст

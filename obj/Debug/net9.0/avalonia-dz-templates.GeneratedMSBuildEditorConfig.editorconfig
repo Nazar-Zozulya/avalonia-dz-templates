@@ -38,3 +38,6 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/avalonia/avalonia-dz-templates/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/avalonia/avalonia-dz-templates/Views/SettingsModal.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
