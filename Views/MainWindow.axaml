@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:avalonia_dz_templates.Views"
-        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="820"
         Width="1200" Height="800"
         x:Class="avalonia_dz_templates.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -12,6 +12,8 @@
         ExtendClientAreaChromeHints="NoChrome"
         ExtendClientAreaToDecorationsHint="True"
         xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen"
 
         Title="avalonia_dz_templates">
 
@@ -20,103 +22,135 @@
         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
-    <Grid ColumnDefinitions="370,*" Classes="MainGrid" >
-        <StackPanel Classes="Sidebar" Grid.Column="0">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5, 10">
-                <Button Width="52" Height="24" Background="Transparent">
-                    <Image Source="avares://avalonia-dz-templates/Assets/button-theme-black.png" Height="36" />
+    <Grid RowDefinitions="40, *">
+        
+        <Grid Grid.Row="0" Background="Transparent" PointerPressed="TopBar_PointerPressed" ZIndex="100">
+            <StackPanel Orientation="Horizontal" Spacing="8" Margin="5,0,0,0" VerticalAlignment="Top">
+                <Button Width="15" Height="15" CornerRadius="7"
+                        Background="#FF5F56" Click="Close_Click">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#E0443E"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+                <Button Width="15" Height="15" CornerRadius="7"
+                        Background="#FFBD2E" Click="Minimize_Click">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#DEA125"/>
+                        </Style>
+                    </Button.Styles>
+                </Button>
+                <Button Width="15" Height="15" CornerRadius="7"
+                        Background="#27C93F" Click="Maximize_Click">
+                    <Button.Styles>
+                        <Style Selector="Button:pointerover /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#1AAB2F"/>
+                        </Style>
+                    </Button.Styles>
                 </Button>
             </StackPanel>
-            <StackPanel>
-                <ListBox Background="Transparent" SelectionChanged="SelectionChanged" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" ScrollViewer.VerticalScrollBarVisibility="Visible" >
-                    <ListBox.Styles>
-                        <Style Selector="ListBoxItem">
-                            <Setter Property="CornerRadius" Value="8" />
-                            <Setter Property="Width" Value="330" />
-                            <Setter Property="Height" Value="90" />
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Padding" Value="8" />
-                            <Setter Property="Margin" Value="10" />
-                        </Style>
-                        <Style Selector="ListBoxItem:pointerover /template/ContentPresenter">
-                            <Setter Property="Background" Value="#55000000" />
-                        </Style>
-                        <Style Selector="ListBoxItem:selected /template/ContentPresenter">
-                            <Setter Property="Background" Value="#33000000" />
-                        </Style>
-                    </ListBox.Styles>
-                    <ListBox.ItemTemplate >
-                        <DataTemplate >
-                            <DockPanel LastChildFill="False">
+        </Grid>
 
-                                <StackPanel HorizontalAlignment="Left" DockPanel.Dock="Left">
-                                    <StackPanel Orientation="Horizontal" Spacing="3">
-                                        <Image Source="avares://avalonia-dz-templates/Assets/navigation.png" Width="16" />
-                                        <TextBlock Text="{Binding Name}" FontSize="24" Foreground="White" FontWeight="Bold" />
+
+        <Grid ColumnDefinitions="370,*" Classes="MainGrid" Grid.Row= "1" >
+            <StackPanel Classes="Sidebar" Grid.Column="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="5, 10">
+                    <Button Width="52" Height="24" Background="Transparent">
+                        <Image Source="avares://avalonia-dz-templates/Assets/button-theme-black.png" Height="36" />
+                    </Button>
+                </StackPanel>
+                <StackPanel>
+                    <ListBox Background="Transparent" SelectionChanged="SelectionChanged" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" ScrollViewer.VerticalScrollBarVisibility="Visible" >
+                        <ListBox.Styles>
+                            <Style Selector="ListBoxItem">
+                                <Setter Property="CornerRadius" Value="8" />
+                                <Setter Property="Width" Value="330" />
+                                <Setter Property="Height" Value="90" />
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Padding" Value="8" />
+                                <Setter Property="Margin" Value="10" />
+                            </Style>
+                            <Style Selector="ListBoxItem:pointerover /template/ContentPresenter">
+                                <Setter Property="Background" Value="#55000000" />
+                            </Style>
+                            <Style Selector="ListBoxItem:selected /template/ContentPresenter">
+                                <Setter Property="Background" Value="#33000000" />
+                            </Style>
+                        </ListBox.Styles>
+                        <ListBox.ItemTemplate >
+                            <DataTemplate >
+                                <DockPanel LastChildFill="False">
+
+                                    <StackPanel HorizontalAlignment="Left" DockPanel.Dock="Left">
+                                        <StackPanel Orientation="Horizontal" Spacing="3">
+                                            <Image Source="avares://avalonia-dz-templates/Assets/navigation.png" Width="16" />
+                                            <TextBlock Text="{Binding Name}" FontSize="24" Foreground="White" FontWeight="Bold" />
+                                        </StackPanel>
+                                        <TextBlock Text="15:24" FontSize="12" Foreground="White" />
+                                        <TextBlock Text="{Binding Description}" FontSize="12" Foreground="White" />
                                     </StackPanel>
-                                    <TextBlock Text="15:24" FontSize="12" Foreground="White" />
-                                    <TextBlock Text="{Binding Description}" FontSize="12" Foreground="White" />
-                                </StackPanel>
-                                <StackPanel HorizontalAlignment="Right" DockPanel.Dock="Right" >
-                                    <TextBlock Text="{Binding Temperature, StringFormat='{}{0}°'}" FontSize="44" Foreground="White" FontWeight="Bold" TextAlignment="Right" />
-                                    <TextBlock FontSize="12" Foreground="White">
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="Макс.:{0}°, мін.:{1}°" >
-                                                <Binding Path="MaxTemp" />
-                                                <Binding Path="MinTemp" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </StackPanel>
-                                <Rectangle Width="314" Height="1" Fill="White" DockPanel.Dock="Bottom" Opacity="0.2" />
-                            </DockPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" Spacing="20" Margin="0, 10, 0, 0" >
-            <StackPanel Classes="Header" Orientation="Horizontal">
-                <StackPanel Classes="SettingsBlock">
-                <Button Classes="SettingsButton"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
-                    <TextBlock Text="Settings" Classes="SettingsLabel"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <Button Content="Додати"
-                        FontSize="14"
-                        Height= "30"
-                        Background="#33000000"
-                        FontWeight="Bold"
-                        VerticalAlignment="Center"
-                        Foreground="White"
-                        Command="{Binding SaveCityCommand}"
-                        IsVisible="{Binding ShowAddButton}"
-                        ToolTip.Tip="Додати до списку збережених міст" />
-                        <AutoCompleteBox Classes="SearchInput"
-                                         Watermark="Введіть місто і натисніть Enter"
-                                         ItemsSource="{Binding AvailableCities}"
-                                         Text="{Binding SearchText, Mode=TwoWay}">
-        
-                            <AutoCompleteBox.KeyBindings>
-                                <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" />
-                            </AutoCompleteBox.KeyBindings>
-        
-                        </AutoCompleteBox>            
+                                    <StackPanel HorizontalAlignment="Right" DockPanel.Dock="Right" >
+                                        <TextBlock Text="{Binding Temperature, StringFormat='{}{0}°'}" FontSize="44" Foreground="White" FontWeight="Bold" TextAlignment="Right" />
+                                        <TextBlock FontSize="12" Foreground="White">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="Макс.:{0}°, мін.:{1}°" >
+                                                    <Binding Path="MaxTemp" />
+                                                    <Binding Path="MinTemp" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <Rectangle Width="314" Height="1" Fill="White" DockPanel.Dock="Bottom" Opacity="0.2" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Classes="ContentBlock" Orientation="Horizontal">
-                <views:CurrentWeatherView
-                DataContext="{Binding SelectedCity}"
-                />
-                <views:ClockView
-                DataContext="{Binding $parent[Window].DataContext}"
-                />
-            </StackPanel>
-            <views:HourlyForecastView DataContext="{Binding SelectedCity}"  />
-            <views:DayForecastView DataContext="{Binding SelectedCity}"  />
 
-        </StackPanel>
+            <Grid RowDefinitions= "Auto, Auto, Auto, Auto" RowSpacing= "10"  Grid.Column="1" Margin="0, 10, 0, 0" >
+                <StackPanel Grid.Row= "0" Classes="Header" Orientation="Horizontal">
+                    <StackPanel Classes="SettingsBlock">
+                    <Button Classes="SettingsButton"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
+                        <TextBlock Text="Settings" Classes="SettingsLabel"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="Додати"
+                            FontSize="14"
+                            Height= "30"
+                            Background="#33000000"
+                            FontWeight="Bold"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Command="{Binding SaveCityCommand}"
+                            IsVisible="{Binding ShowAddButton}"
+                            ToolTip.Tip="Додати до списку збережених міст" />
+                            <AutoCompleteBox Classes="SearchInput"
+                                            Watermark="Введіть місто і натисніть Enter"
+                                            ItemsSource="{Binding AvailableCities}"
+                                            Text="{Binding SearchText, Mode=TwoWay}">
+            
+                                <AutoCompleteBox.KeyBindings>
+                                    <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" />
+                                </AutoCompleteBox.KeyBindings>
+            
+                            </AutoCompleteBox>            
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Row= "1" Classes="ContentBlock" Orientation="Horizontal">
+                    <views:CurrentWeatherView
+                    DataContext="{Binding SelectedCity}"
+                    />
+                    <views:ClockView
+                    DataContext="{Binding $parent[Window].DataContext}"
+                    />
+                </StackPanel>
+                <views:HourlyForecastView Grid.Row="2" DataContext="{Binding SelectedCity}"  />
+                <views:DayForecastView Grid.Row="3" DataContext="{Binding SelectedCity}"  />
+
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

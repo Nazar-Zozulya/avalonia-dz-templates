@@ -12,6 +12,33 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    private void TopBar_PointerPressed(object sender, Avalonia.Input.PointerPressedEventArgs e) // для перетягування вікна мишкою
+    {
+        // дозволяє рухати вікно при натисканні на верхню панель
+        BeginMoveDrag(e);
+    }
+
+    // Закриття
+    private void Close_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        Close();
+    }
+
+    // Згортання
+    private void Minimize_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        WindowState = Avalonia.Controls.WindowState.Minimized;
+    }
+
+    // Розгортання на весь екран або повернення до нормального розміру
+    private void Maximize_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        WindowState = WindowState == Avalonia.Controls.WindowState.Maximized
+            ? Avalonia.Controls.WindowState.Normal
+            : Avalonia.Controls.WindowState.Maximized;
+    }
+
     
     
 
