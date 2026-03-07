@@ -8,23 +8,43 @@
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-  
-    <Application.Styles>
-        <FluentTheme />
-        <Style Selector="Grid.MainGrid">
-            <Setter Property="Background">
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0%, 100%" EndPoint="100%, 0%">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="SemiTransparentBackground" Color="#33000000" />
+                    <SolidColorBrush x:Key="SidebarBackground" Color="#66000000" />
+                    <SolidColorBrush x:Key="MainTextForeground" Color="White" />
+                    <SolidColorBrush x:Key="DividerColor" Color="White" />
+                    <LinearGradientBrush x:Key="MainAppBackground" StartPoint="0%, 100%" EndPoint="100%, 0%">
                         <GradientStop Offset="0.05" Color="#87CEFA"/>
                         <GradientStop Offset="1.0" Color="#FFDF56"/>
                     </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="SemiTransparentBackground" Color="#33FFFFFF" />
+                    <SolidColorBrush x:Key="SidebarBackground" Color="#66FFFFFF" />
+                    <SolidColorBrush x:Key="MainTextForeground" Color="#1C1C1C" />
+                    <SolidColorBrush x:Key="DividerColor" Color="#44000000" />
+                    <LinearGradientBrush x:Key="MainAppBackground" StartPoint="0%, 100%" EndPoint="100%, 0%">
+                        <GradientStop Offset="0.05" Color="#A3D8F4"/>
+                        <GradientStop Offset="1.0" Color="#FFE885"/>
+                    </LinearGradientBrush>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+        <Style Selector="Grid.MainGrid">
+            <Setter Property="Background" Value="{DynamicResource MainAppBackground}" />
             <Setter Property="Width" Value="1200" />
-            <Setter Property="Height" Value="840" />
+            <Setter Property="Height" Value="800" />
         </Style>
 
-        <Style Selector="StackPanel.Sidebar">
+        <Style Selector="Grid.Sidebar">
             <Setter Property="Background" Value="#66000000" />
             <!-- <Setter Property="Opacity" Value="0.2" /> -->
             <Setter Property="Width" Value="370" />

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:avalonia_dz_templates.Views"
-        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="820"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
         Width="1200" Height="800"
         x:Class="avalonia_dz_templates.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -22,9 +22,9 @@
         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-    <Grid RowDefinitions="40, *">
+    <Grid RowDefinitions="*">
         
-        <Grid Grid.Row="0" Background="Transparent" PointerPressed="TopBar_PointerPressed" ZIndex="100">
+        <!-- <Grid Grid.Row="0" Background="Transparent" PointerPressed="TopBar_PointerPressed" ZIndex="100">
             <StackPanel Orientation="Horizontal" Spacing="8" Margin="5,0,0,0" VerticalAlignment="Top">
                 <Button Width="15" Height="15" CornerRadius="7"
                         Background="#FF5F56" Click="Close_Click">
@@ -51,17 +51,45 @@
                     </Button.Styles>
                 </Button>
             </StackPanel>
-        </Grid>
+        </Grid> -->
 
 
         <Grid ColumnDefinitions="370,*" Classes="MainGrid" Grid.Row= "1" >
-            <StackPanel Classes="Sidebar" Grid.Column="0">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="5, 10">
-                    <Button Width="52" Height="24" Background="Transparent">
+            <Grid Classes="Sidebar" RowDefinitions= "Auto,Auto,*" Grid.Column="0">
+                <Grid Grid.Row="0" Background="Transparent" PointerPressed="TopBar_PointerPressed" ZIndex="100">
+                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="10,10,0,0" VerticalAlignment="Top">
+                        <Button Width="15" Height="15" CornerRadius="7"
+                                Background="#FF5F56" Click="Close_Click">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="#E0443E"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                        <Button Width="15" Height="15" CornerRadius="7"
+                                Background="#FFBD2E" Click="Minimize_Click">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="#DEA125"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                        <Button Width="15" Height="15" CornerRadius="7"
+                                Background="#27C93F" Click="Maximize_Click">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="#1AAB2F"/>
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="5, 10">
+                    <Button Width="52" Height="24" Background="Transparent" Command="{Binding ToggleThemeCommand}">
                         <Image Source="avares://avalonia-dz-templates/Assets/button-theme-black.png" Height="36" />
                     </Button>
                 </StackPanel>
-                <StackPanel>
+                <Grid ColumnDefinitions="*" Grid.Row="2">
                     <ListBox Background="Transparent" SelectionChanged="SelectionChanged" ItemsSource="{Binding Cities}" SelectedItem="{Binding SelectedCity}" ScrollViewer.VerticalScrollBarVisibility="Visible" >
                         <ListBox.Styles>
                             <Style Selector="ListBoxItem">
@@ -107,13 +135,13 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                </StackPanel>
-            </StackPanel>
+                </Grid>
+            </Grid>
 
             <Grid RowDefinitions= "Auto, Auto, Auto, Auto" RowSpacing= "10"  Grid.Column="1" Margin="0, 10, 0, 0" >
                 <StackPanel Grid.Row= "0" Classes="Header" Orientation="Horizontal">
                     <StackPanel Classes="SettingsBlock">
-                    <Button Classes="SettingsButton"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
+                    <Button Classes="SettingsButton" Command= "{Binding OpenSettingsCommand}"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
                         <TextBlock Text="Settings" Classes="SettingsLabel"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Spacing="10">

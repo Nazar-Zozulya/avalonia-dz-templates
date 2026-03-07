@@ -13,6 +13,10 @@ using avalonia_dz_templates.Services;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.Measure;
+using avalonia_dz_templates.Views;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia;
+using Avalonia.Styling;
 
 namespace avalonia_dz_templates.ViewModels
 {
@@ -73,6 +77,12 @@ namespace avalonia_dz_templates.ViewModels
         // Змінна кнопки яка відповідає за збереження нового городу
         public ICommand SaveCityCommand { get; }
 
+        public ICommand DeleteCityCommand { get; }
+
+        public ICommand OpenSettingsCommand { get; }
+
+        public ICommand ToggleThemeCommand { get; }
+
         // --- ВЛАСТИВОСТІ ГОДИННИКА (Повернув CurrentDayOfWeek) ---
         private string _currentTime = "";
 
@@ -102,6 +112,7 @@ namespace avalonia_dz_templates.ViewModels
 
         public MainWindowViewModel()
         {
+
             // Доступні міста
             AvailableCities = new List<string>
             {
@@ -243,11 +254,47 @@ namespace avalonia_dz_templates.ViewModels
                 }
             });
 
+            DeleteCityCommand = ReactiveCommand.Create<CityViewModel>(DeleteCity);
+
+            OpenSettingsCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+                var settingsWindow = new SettingsModalView();
+                var lifetime = Avalonia.Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
+
+                if (lifetime != null && lifetime.MainWindow != null)
+                {
+                    settingsWindow.DataContext = this;
+                    await settingsWindow.ShowDialog(lifetime.MainWindow);
+                }
+            });
+
+            ToggleThemeCommand = ReactiveCommand.Create(() =>
+            {
+                if (Application.Current != null)
+                {
+                    var currentTheme = Application.Current.RequestedThemeVariant;
+                    Application.Current.RequestedThemeVariant = currentTheme == ThemeVariant.Dark ? ThemeVariant.Light : ThemeVariant.Dark;     
+                }
+            });
+
 
 
 
             // Запускаємо відлік часу
             StartClock();
+        }
+
+        private void DeleteCity(CityViewModel cityToRemove)
+        {
+            if (cityToRemove != null && Cities.Contains(cityToRemove))
+            {
+                Cities.Remove(cityToRemove);
+
+                if (SelectedCity == cityToRemove)
+                {
+                    SelectedCity = Cities.First();
+                }
+            }
         }
 
         // Методи для отримання погоди та її оновлення
