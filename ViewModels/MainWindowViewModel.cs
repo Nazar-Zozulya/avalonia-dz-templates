@@ -83,6 +83,8 @@ namespace avalonia_dz_templates.ViewModels
 
         public ICommand ToggleThemeCommand { get; }
 
+        public ICommand SaveSettingsCityCommand { get; }
+
         // --- ВЛАСТИВОСТІ ГОДИННИКА (Повернув CurrentDayOfWeek) ---
         private string _currentTime = "";
 
@@ -108,110 +110,85 @@ namespace avalonia_dz_templates.ViewModels
             set => this.RaiseAndSetIfChanged(ref _currentDayOfWeek, value);
         }
 
+
+        private Dictionary<string, List<string>> _cityDictionary = new Dictionary<string, List<string>>
+        {
+            { "Ukraine", new List<string> { "Kyiv", "Lviv", "Odesa", "Dnipro" } },
+            { "Poland", new List<string> { "Warsaw", "Krakow", "Gdansk" } }
+        };
+
+        private ObservableCollection<string> _citiesForSelectedCountry = new ObservableCollection<string>();
+        public ObservableCollection<string> CitiesForSelectedCountry
+        {
+            get => _citiesForSelectedCountry;
+            set 
+            { 
+                this.RaiseAndSetIfChanged(ref _citiesForSelectedCountry, value);
+            }
+            
+        }
+
+        private string _selectedNewCity = string.Empty;
+        public string SelectedNewCity
+        {
+            get => _selectedNewCity;
+            set 
+            { 
+                this.RaiseAndSetIfChanged(ref _selectedNewCity, value);
+                System.Console.WriteLine(SelectedNewCity);
+            }
+        }
+
+        private string _coordinatesText = string.Empty;
+        public string CoordinatesText
+        {
+            get => _coordinatesText;
+            set => this.RaiseAndSetIfChanged(ref _coordinatesText, value);
+        }
+
+        private ObservableCollection<string> _availableCountries = new ObservableCollection<string>();
+        public ObservableCollection<string> AvailableCountries
+        {
+            get => _availableCountries;
+            set => this.RaiseAndSetIfChanged(ref _availableCountries, value);
+        }
+
+        private string _selectedCountry = string.Empty;
+        public string SelectedCountry
+        {
+            get => _selectedCountry;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectedCountry, value);
+                SetNewSelectedCountries();
+            }
+        }
+
+
+        private void SetNewSelectedCountries()
+        {
+            CitiesForSelectedCountry = new ObservableCollection<string>();
+
+            if (_cityDictionary.TryGetValue(SelectedCountry, out List<string> cities))
+            {
+               CitiesForSelectedCountry = new ObservableCollection<string>(cities);
+            }
+        }
         
 
         public MainWindowViewModel()
         {
 
             // Доступні міста
-            AvailableCities = new List<string>
-            {
-                // ===== Ukraine =====
-                "Kyiv",
-                "Lviv",
-                "Kharkiv",
-                "Odesa",
-                "Dnipro",
-                "Zaporizhzhia",
-                "Vinnytsia",
-                "Poltava",
-                "Chernihiv",
-                "Cherkasy",
-                "Zhytomyr",
-                "Sumy",
-                "Khmelnytskyi",
-                "Chernivtsi",
-                "Rivne",
-                "Ivano-Frankivsk",
-                "Ternopil",
-                "Lutsk",
-                "Uzhhorod",
-                "Mykolaiv",
-                "Kherson",
-                "Kropyvnytskyi",
-                "Kryvyi Rih",
-
-                // ===== Poland =====
-                "Warsaw",
-                "Krakow",
-                "Wroclaw",
-                "Gdansk",
-                "Poznan",
-                "Lodz",
-
-                // ===== Germany =====
-                "Berlin",
-                "Munich",
-                "Hamburg",
-                "Frankfurt",
-                "Cologne",
-                "Stuttgart",
-
-                // ===== France =====
-                "Paris",
-                "Marseille",
-                "Lyon",
-                "Toulouse",
-                "Nice",
-
-                // ===== Italy =====
-                "Rome",
-                "Milan",
-                "Naples",
-                "Turin",
-                "Venice",
-
-                // ===== Spain =====
-                "Madrid",
-                "Barcelona",
-                "Valencia",
-                "Seville",
-
-                // ===== United Kingdom =====
-                "London",
-                "Manchester",
-                "Birmingham",
-                "Liverpool",
-                "Glasgow",
-                "Edinburgh",
-
-                // ===== Other Europe =====
-                "Prague",
-                "Vienna",
-                "Amsterdam",
-                "Brussels",
-                "Zurich",
-                "Stockholm",
-                "Oslo",
-                "Copenhagen",
-                "Helsinki",
-                "Lisbon",
-                "Athens",
-                "Budapest",
-                "Bucharest",
-                "Bratislava",
-                "Vilnius",
-                "Riga",
-                "Tallinn",
-                "Sofia",
-                "Belgrade",
-                "Zagreb"
-            };
-            // Сортуємо цей список
-            AvailableCities.Sort();
 
 
             // Завантажуємо дані
+
+            AvailableCountries = new ObservableCollection<string>(_cityDictionary.Keys);
+            // AvailableCountries = new ObservableCollection<string> {"1", "2", "3"};
+
+            System.Console.WriteLine("Available countries: " + JsonSerializer.Serialize(AvailableCountries));
+
             LoadData();
             // _ = UpdateAllCitiesWeather();
 
@@ -278,6 +255,23 @@ namespace avalonia_dz_templates.ViewModels
             });
 
 
+            SaveSettingsCityCommand = ReactiveCommand.Create(async () =>
+            {
+                var searchCityAnswer = await SearchAndAddNewCity(SelectedNewCity);
+                if (searchCityAnswer == null) return;
+
+                System.Console.WriteLine(searchCityAnswer.Name);
+
+                if (!Cities.Any(c => c.Name.Equals(searchCityAnswer.Name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    Cities.Add(searchCityAnswer);
+
+                    SelectedCity = searchCityAnswer;
+                    SaveData();
+                }
+            });
+
+
 
 
             // Запускаємо відлік часу
@@ -295,9 +289,64 @@ namespace avalonia_dz_templates.ViewModels
                     SelectedCity = Cities.First();
                 }
             }
+            SaveData();
         }
 
         // Методи для отримання погоди та її оновлення
+
+        private async Task<CityViewModel> SearchAndAddNewCity(string query)
+        {
+            var data = await _weatherService.GetWeatherAsync(query);
+
+            if (data == null) return null!; // или throw, если предпочитаешь
+
+            string iconPath = GetIconPath(data.Weather[0].Main.ToLower());
+
+            var newCity = new CityViewModel(
+                data.Name,
+                (int)data.Main.Temp,
+                data.Weather[0].Description,
+                (int)data.Main.TempMax,
+                (int)data.Main.TempMin,
+                iconPath,
+                data.Timezone
+            );
+
+            try
+            {
+                var forecastData = await _weatherService.GetForecastAsync(data.Name);
+
+                if (forecastData != null)
+                {
+                    foreach (var item in forecastData.List.Take(15))
+                    {
+                        if (item == null || item.Weather == null || item.Weather.Count == 0)
+                            continue;
+
+                        DateTime date = DateTimeOffset.FromUnixTimeSeconds(item.Dt).DateTime.AddSeconds(data.Timezone);
+                        string itemIconMain = item.Weather[0].Main.ToLower();
+                        string itemIcon = GetHourlyIconPath(itemIconMain);
+                        newCity.HourlyForecasts.Add(new HourlyForecastViewModel(date.ToString("HH:mm"),
+                            (int)item.Main.Temp, itemIcon));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+
+            await Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                SelectedCity = newCity;
+                this.RaisePropertyChanged(nameof(SelectedCity));
+            });
+
+            CheckButtonVisibility();
+
+            return newCity; // <- вот сюда нужно вернуть объект
+        }
+
         private async Task SearchCityApi(string query)
         {
             var data = await _weatherService.GetWeatherAsync(query);

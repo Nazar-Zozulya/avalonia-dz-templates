@@ -1,12 +1,13 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:avalonia_dz_templates.ViewModels"
         x:Class="avalonia_dz_templates.Views.SettingsModalView"
+        x:DataType="vm:MainWindowViewModel"
         Title="Settings"
         Width="850" Height="650"
         WindowStartupLocation="CenterOwner"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="NoChrome"
-        x:CompileBindings="False"
         Background="#3B4032">
 
     <Grid RowDefinitions="70, *">
