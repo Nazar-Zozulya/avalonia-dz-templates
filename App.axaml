@@ -14,6 +14,7 @@
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="SemiTransparentBackground" Color="#33000000" />
+                    
                     <SolidColorBrush x:Key="SidebarBackground" Color="#66000000" />
                     <SolidColorBrush x:Key="MainTextForeground" Color="White" />
                     <SolidColorBrush x:Key="DividerColor" Color="White" />
@@ -21,6 +22,8 @@
                         <GradientStop Offset="0.05" Color="#87CEFA"/>
                         <GradientStop Offset="1.0" Color="#FFDF56"/>
                     </LinearGradientBrush>
+                    <Thickness x:Key="SwitchThumbMargin">34,0,0,0</Thickness>
+                    <SolidColorBrush x:Key="SwitchThumbColor" Color= "#333333" />
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Light">
                     <SolidColorBrush x:Key="SemiTransparentBackground" Color="#33FFFFFF" />
@@ -31,6 +34,9 @@
                         <GradientStop Offset="0.05" Color="#A3D8F4"/>
                         <GradientStop Offset="1.0" Color="#FFE885"/>
                     </LinearGradientBrush>
+                    <Thickness x:Key="SwitchThumbMargin">2,0,0,0</Thickness>
+                    <SolidColorBrush x:Key="SwitchThumbColor" Color= "White" />
+
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

@@ -54,7 +54,7 @@
         </Grid> -->
 
 
-        <Grid ColumnDefinitions="370,*" Classes="MainGrid" Grid.Row= "1" >
+        <Grid ColumnDefinitions="370,*" Classes="MainGrid" Grid.Row= "1" Background="{Binding AppBackground}" >
             <Grid Classes="Sidebar" RowDefinitions= "Auto,Auto,*" Grid.Column="0">
                 <Grid Grid.Row="0" Background="Transparent" PointerPressed="TopBar_PointerPressed" ZIndex="100">
                     <StackPanel Orientation="Horizontal" Spacing="8" Margin="10,10,0,0" VerticalAlignment="Top">
@@ -85,8 +85,30 @@
                     </StackPanel>
                 </Grid>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="5, 10">
-                    <Button Width="52" Height="24" Background="Transparent" Command="{Binding ToggleThemeCommand}">
-                        <Image Source="avares://avalonia-dz-templates/Assets/button-theme-black.png" Height="36" />
+                    <Button Command="{Binding ToggleThemeCommand}" Background="Transparent" Padding="0" CornerRadius= "16">
+                        <Button.Styles>
+                            <Style>
+                                <Setter Property= "Background" Value= "Transparent"/>    
+                                <Setter Property= "BorderBrush" Value= "Transparent"/>    
+                            </Style>    
+                        </Button.Styles>
+
+                        <Border Width="64" Height="32" CornerRadius="16" Background="#E0E0E0">
+                            <Border Width="28" Height="28" CornerRadius="14"
+                                    HorizontalAlignment="Left"
+                                    Margin="{DynamicResource SwitchThumbMargin}"
+                                    Background="{DynamicResource SwitchThumbColor}">
+
+                                <Border.Transitions>
+                                    <Transitions>
+                                        <ThicknessTransition Property="Margin" Duration="0:0:0.25" Easing="CubicEaseOut"/>
+                                        <BrushTransition Property="Background" Duration="0:0:0.25"/>
+                                    </Transitions>
+                                </Border.Transitions>
+
+                                <Image Source="{Binding ThemeIcon}" Width="16" Height="16" Stretch="Uniform"/>
+                            </Border>
+                        </Border>
                     </Button>
                 </StackPanel>
                 <Grid ColumnDefinitions="*" Grid.Row="2">
