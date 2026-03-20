@@ -22,38 +22,7 @@
         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-    <Grid RowDefinitions="*">
-        
-        <!-- <Grid Grid.Row="0" Background="Transparent" PointerPressed="TopBar_PointerPressed" ZIndex="100">
-            <StackPanel Orientation="Horizontal" Spacing="8" Margin="5,0,0,0" VerticalAlignment="Top">
-                <Button Width="15" Height="15" CornerRadius="7"
-                        Background="#FF5F56" Click="Close_Click">
-                    <Button.Styles>
-                        <Style Selector="Button:pointerover /template/ ContentPresenter">
-                            <Setter Property="Background" Value="#E0443E"/>
-                        </Style>
-                    </Button.Styles>
-                </Button>
-                <Button Width="15" Height="15" CornerRadius="7"
-                        Background="#FFBD2E" Click="Minimize_Click">
-                    <Button.Styles>
-                        <Style Selector="Button:pointerover /template/ ContentPresenter">
-                            <Setter Property="Background" Value="#DEA125"/>
-                        </Style>
-                    </Button.Styles>
-                </Button>
-                <Button Width="15" Height="15" CornerRadius="7"
-                        Background="#27C93F" Click="Maximize_Click">
-                    <Button.Styles>
-                        <Style Selector="Button:pointerover /template/ ContentPresenter">
-                            <Setter Property="Background" Value="#1AAB2F"/>
-                        </Style>
-                    </Button.Styles>
-                </Button>
-            </StackPanel>
-        </Grid> -->
-
-
+    <Grid RowDefinitions="*" Background= "Red">
         <Grid ColumnDefinitions="370,*" Classes="MainGrid" Grid.Row= "1" Background="{Binding AppBackground}" >
             <Grid Classes="Sidebar" RowDefinitions= "Auto,Auto,*" Grid.Column="0">
                 <Grid Grid.Row="0" Background="Transparent" PointerPressed="TopBar_PointerPressed" ZIndex="100">
@@ -85,30 +54,30 @@
                     </StackPanel>
                 </Grid>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="5, 10">
-                    <Button Command="{Binding ToggleThemeCommand}" Background="Transparent" Padding="0" CornerRadius= "16">
+                    <Button Grid.Row= "1" Command="{Binding ToggleThemeCommand}" Background="Transparent" Padding="0" CornerRadius= "16">
                         <Button.Styles>
                             <Style>
                                 <Setter Property= "Background" Value= "Transparent"/>    
                                 <Setter Property= "BorderBrush" Value= "Transparent"/>    
                             </Style>    
-                        </Button.Styles>
-
-                        <Border Width="64" Height="32" CornerRadius="16" Background="#E0E0E0">
-                            <Border Width="28" Height="28" CornerRadius="14"
-                                    HorizontalAlignment="Left"
-                                    Margin="{DynamicResource SwitchThumbMargin}"
-                                    Background="{DynamicResource SwitchThumbColor}">
-
+                            </Button.Styles>
+                            
+                            <Border Width="64" Height="32" CornerRadius="16" Background="#E0E0E0">
+                                <Border Width="28" Height="28" CornerRadius="14"
+                                HorizontalAlignment="Left"
+                                Margin="{DynamicResource SwitchThumbMargin}"
+                                Background="{DynamicResource SwitchThumbColor}">
+                                
                                 <Border.Transitions>
                                     <Transitions>
                                         <ThicknessTransition Property="Margin" Duration="0:0:0.25" Easing="CubicEaseOut"/>
                                         <BrushTransition Property="Background" Duration="0:0:0.25"/>
                                     </Transitions>
-                                </Border.Transitions>
-
-                                <Image Source="{Binding ThemeIcon}" Width="16" Height="16" Stretch="Uniform"/>
+                                    </Border.Transitions>
+                                    
+                                    <Image Source="{Binding ThemeIcon}" Width="16" Height="16" Stretch="Uniform"/>
+                                </Border>
                             </Border>
-                        </Border>
                     </Button>
                 </StackPanel>
                 <Grid ColumnDefinitions="*" Grid.Row="2">
@@ -160,13 +129,13 @@
                 </Grid>
             </Grid>
 
-            <Grid RowDefinitions= "Auto, Auto, Auto, Auto" RowSpacing= "10"  Grid.Column="1" Margin="0, 10, 0, 0" >
-                <StackPanel Grid.Row= "0" Classes="Header" Orientation="Horizontal">
-                    <StackPanel Classes="SettingsBlock">
-                    <Button Classes="SettingsButton" Command= "{Binding OpenSettingsCommand}"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
+            <Grid RowDefinitions= "Auto, Auto, Auto" RowSpacing= "10"  Grid.Column="1" Margin="0, 10, 0, 0" >
+                <Grid Grid.Row= "0" ColumnDefinitions= "Auto, *, Auto" Classes="Header" Margin= "10,0" >
+                    <StackPanel Classes="SettingsBlock" Grid.Column= "0">
+                        <Button Classes="SettingsButton" Command= "{Binding OpenSettingsCommand}"><Image Source="avares://avalonia-dz-templates/Assets/settings.png" /></Button>
                         <TextBlock Text="Settings" Classes="SettingsLabel"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="10" Grid.Column= "2">
                         <Button Content="Додати"
                             FontSize="14"
                             Height= "30"
@@ -180,6 +149,7 @@
                             <AutoCompleteBox Classes="SearchInput"
                                             Watermark="Введіть місто і натисніть Enter"
                                             ItemsSource="{Binding AvailableCities}"
+                                            Background= "#33000000"
                                             Text="{Binding SearchText, Mode=TwoWay}">
             
                                 <AutoCompleteBox.KeyBindings>
@@ -188,18 +158,22 @@
             
                             </AutoCompleteBox>            
                     </StackPanel>
-                </StackPanel>
-                <StackPanel Grid.Row= "1" Classes="ContentBlock" Orientation="Horizontal">
+                </Grid>
+                <Grid Grid.Row= "1" ColumnDefinitions= "1*, 10, 1*" Classes="ContentBlock" Margin= "10,0">
                     <views:CurrentWeatherView
+                    Grid.Column="0"
                     DataContext="{Binding SelectedCity}"
                     />
                     <views:ClockView
+                    Grid.Column= "2"
                     DataContext="{Binding $parent[Window].DataContext}"
                     />
-                </StackPanel>
-                <views:HourlyForecastView Grid.Row="2" DataContext="{Binding SelectedCity}"  />
-                <views:DayForecastView Grid.Row="3" DataContext="{Binding SelectedCity}"  />
-
+                </Grid>
+                <Grid Grid.Row= "2" RowDefinitions= "1*,10,2*">
+                    <views:HourlyForecastView Grid.Row="0" DataContext="{Binding SelectedCity}"  />
+                    <views:DayForecastView Grid.Row="2" DataContext="{Binding SelectedCity}"  />
+                
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

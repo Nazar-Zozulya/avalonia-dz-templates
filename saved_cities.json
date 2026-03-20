@@ -1,23 +1,17 @@
 [
   {
-    "Name": "Krakow"
+    "Name": "Hamburg"
   },
   {
-    "Name": "Kyiv"
+    "Name": "Frankfurt am Main"
   },
   {
-    "Name": "Warsaw"
+    "Name": "Cologne"
   },
   {
-    "Name": "Gda\u0144sk"
+    "Name": "Munich"
   },
   {
-    "Name": "Bras\u00EDlia"
-  },
-  {
-    "Name": "New York"
-  },
-  {
-    "Name": "Belo Horizonte"
+    "Name": "Berlin"
   }
 ]
